@@ -1,0 +1,61 @@
+{
+  "host": "127.0.0.1",
+  "port": 4141,
+  "providers": {
+    "mock": {
+      "protocol": "mock",
+      "models": {
+        "echo": {
+          "name": "OmniCodex Echo",
+          "context": 128000,
+          "output": 8192,
+          "tools": true
+        }
+      }
+    },
+    "deepseek": {
+      "protocol": "openai-compatible",
+      "baseURL": "https://api.deepseek.com",
+      "keyEnv": "DEEPSEEK_API_KEY"
+    },
+    "lmstudio": {
+      "protocol": "openai-compatible",
+      "baseURL": "http://127.0.0.1:1234/v1",
+      "keyEnv": "LMSTUDIO_API_KEY"
+    },
+    "ollama": {
+      "protocol": "openai-compatible",
+      "baseURL": "http://127.0.0.1:11434/v1"
+    },
+    "openai": {
+      "protocol": "responses",
+      "baseURL": "https://api.openai.com/v1",
+      "keyEnv": "OPENAI_API_KEY"
+    },
+    "openai-chatgpt": {
+      "protocol": "responses",
+      "baseURL": "https://chatgpt.com/backend-api/codex",
+      "forwardAuthorization": true,
+      "models": {
+        "gpt-5.5": {
+          "name": "GPT-5.5 (ChatGPT OAuth)",
+          "context": 272000,
+          "output": 128000,
+          "tools": true,
+          "vision": true,
+          "reasoning": true
+        }
+      }
+    },
+    "anthropic": {
+      "protocol": "anthropic",
+      "baseURL": "https://api.anthropic.com/v1",
+      "keyEnv": "ANTHROPIC_API_KEY"
+    },
+    "google": {
+      "protocol": "google",
+      "baseURL": "https://generativelanguage.googleapis.com/v1beta",
+      "keyEnv": "GEMINI_API_KEY"
+    }
+  }
+}

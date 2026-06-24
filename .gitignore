@@ -1,0 +1,5 @@
+node_modules/
+omnicodex.config.json
+*.log
+*.bak
+.env

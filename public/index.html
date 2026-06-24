@@ -1,0 +1,415 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmniCodex Gateway — Admin</title>
+<style>
+:root {
+  --bg: #0b0d17;
+  --card: #111827;
+  --card-hover: #1a2236;
+  --border: #1e293b;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --accent: #6366f1;
+  --green: #10b981;
+  --red: #ef4444;
+  --yellow: #f59e0b;
+  --orange: #f97316;
+  --radius: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+/* Sidebar */
+.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:20px 0;display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+.sidebar .logo{font-size:18px;font-weight:700;padding:8px 20px 20px;color:var(--accent);display:flex;align-items:center;gap:8px}
+.sidebar .logo span{font-size:22px}
+.nav-item{padding:10px 20px;cursor:pointer;color:var(--muted);font-size:14px;display:flex;align-items:center;gap:8px;border:none;background:none;width:100%;text-align:left;transition:.15s}
+.nav-item:hover{color:var(--text);background:var(--card-hover)}
+.nav-item.active{color:var(--text);background:var(--card-hover);border-left:3px solid var(--accent);padding-left:17px}
+/* Main */
+.main{flex:1;padding:30px;overflow-y:auto;max-height:100vh}
+h2{font-size:20px;font-weight:600;margin-bottom:20px}
+/* Cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:.15s}
+.card:hover{border-color:#334155}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.card-header h3{font-size:15px;font-weight:600;display:flex;align-items:center;gap:6px}
+.card-header .icon{font-size:20px}
+.status{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:3px 8px;border-radius:20px;font-weight:500}
+.status.online{background:#064e3b;color:var(--green)}
+.status.offline{background:#450a0a;color:var(--red)}
+.status-check{width:7px;height:7px;border-radius:50%}
+.status.online .status-check{background:var(--green)}
+.status.offline .status-check{background:var(--red)}
+/* Inputs */
+.input-group{margin-bottom:12px}
+.input-group label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+input[type="text"],input[type="password"]{width:100%;padding:10px 12px;background:#0f172a;border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;font-family:monospace;outline:none}
+input:focus{border-color:var(--accent)}
+.btn{padding:8px 14px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{opacity:.9}
+.btn-danger{background:var(--red);color:#fff}
+.btn-secondary{background:var(--border);color:var(--text)}
+.btn-secondary:hover{background:#334155}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-row{display:flex;gap:8px;margin-top:8px}
+/* Status row */
+.status-row{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;min-width:180px}
+.stat-card .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.stat-card .stat-value{font-size:24px;font-weight:700;margin-top:4px}
+.stat-card .stat-sub{font-size:12px;color:var(--muted);margin-top:2px}
+/* Table */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 12px;color:var(--muted);font-weight:500;font-size:11px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+td{padding:10px 12px;border-bottom:1px solid #0f172a}
+tr:hover td{background:#0f172a}
+.model-tag{padding:3px 8px;background:#1a2236;border-radius:4px;font-family:monospace;font-size:12px}
+/* Logs */
+.log-view{background:#0a0a0a;border:1px solid var(--border);border-radius:var(--radius);padding:16px;max-height:400px;overflow-y:auto;font-family:monospace;font-size:12px;line-height:1.6}
+.log-line{padding:2px 0;color:var(--muted)}
+.log-line.error{color:var(--red)}
+.log-line.warn{color:var(--yellow)}
+/* Tabs */
+.tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:0}
+.tab{padding:8px 16px;color:var(--muted);cursor:pointer;font-size:13px;border:none;background:none;border-bottom:2px solid transparent;transition:.15s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+/* Toast */
+.toast{position:fixed;bottom:20px;right:20px;padding:12px 20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);font-size:13px;z-index:100;animation:slideUp .3s ease}
+.toast.success{border-color:var(--green)}
+.toast.error{border-color:var(--red)}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hidden{display:none!important}
+.model-select{max-height:300px;overflow-y:auto}
+.model-select label{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;cursor:pointer}
+.model-select input[type="checkbox"]{accent-color:var(--accent);width:15px;height:15px}
+.refresh-indicator{font-size:12px;color:var(--muted);margin-top:6px}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="logo"><span>⚙️</span> OmniCodex</div>
+  <button class="nav-item active" data-page="dashboard">🏠 Dashboard</button>
+  <button class="nav-item" data-page="providers">🔑 Providers & Keys</button>
+  <button class="nav-item" data-page="models">🧠 Models</button>
+  <button class="nav-item" data-page="profile">🔄 Profile</button>
+  <button class="nav-item" data-page="logs">📋 Logs</button>
+</aside>
+<main class="main" id="main"></main>
+<div id="toast" class="toast hidden"></div>
+
+<script>
+const API = "";
+let currentPage = "dashboard";
+
+// ─── Navigation ──────────────────────────────────────────────────
+document.querySelectorAll(".nav-item").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentPage = btn.dataset.page;
+    renderPage();
+  });
+});
+
+// ─── Toast ───────────────────────────────────────────────────────
+function toast(msg, type = "success") {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.className = `toast ${type}`;
+  el.classList.remove("hidden");
+  setTimeout(() => el.classList.add("hidden"), 3000);
+}
+
+// ─── API helpers ─────────────────────────────────────────────────
+async function api(method, path, body) {
+  const opts = { method, headers: { "Content-Type": "application/json" } };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(`${API}${path}`, opts);
+  return res.json();
+}
+
+// ─── Render ──────────────────────────────────────────────────────
+async function renderPage() {
+  const main = document.getElementById("main");
+  try {
+    switch (currentPage) {
+      case "dashboard": main.innerHTML = await renderDashboard(); break;
+      case "providers": main.innerHTML = await renderProviders(); renderProviderEvents(); break;
+      case "models": main.innerHTML = await renderModels(); renderModelEvents(); break;
+      case "profile": main.innerHTML = await renderProfile(); renderProfileEvents(); break;
+      case "logs": main.innerHTML = renderLogs(); break;
+    }
+  } catch (err) {
+    main.innerHTML = `<h2>Error</h2><p>${err.message}</p>`;
+  }
+}
+
+// ─── Dashboard ───────────────────────────────────────────────────
+async function renderDashboard() {
+  const status = await api("GET", "/api/status");
+  return `
+    <h2>📊 Dashboard</h2>
+    <div class="status-row">
+      <div class="stat-card">
+        <div class="stat-label">Codex Profile</div>
+        <div class="stat-value">${status.profile}</div>
+        <div class="stat-sub">Model: ${status.model}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Provider</div>
+        <div class="stat-value">${status.provider}</div>
+        <div class="stat-sub">Gateway on :${status.gatewayPort}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Configured Keys</div>
+        <div class="stat-value">${status.configuredProviders.length}</div>
+        <div class="stat-sub">${status.configuredProviders.join(", ") || "none"}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Uptime</div>
+        <div class="stat-value">${formatUptime(status.uptime)}</div>
+        <div class="stat-sub">Admin on :${status.adminPort}</div>
+      </div>
+    </div>
+    <h2>⏱ Quick Actions</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-header"><h3>🔄 Switch Profile</h3></div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Current: <strong>${status.profile}</strong></p>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="switchProfile('${status.profile === "default" ? "omnicodex" : "default"}')">
+            Switch to ${status.profile === "default" ? "OmniCodex" : "Default"}
+          </button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>🧠 Refresh Models</h3></div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Fetch models from all configured providers</p>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="refreshModels()">Refresh All</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ─── Providers ───────────────────────────────────────────────────
+async function renderProviders() {
+  const providers = await api("GET", "/api/providers");
+  return `
+    <h2>🔑 Providers & API Keys</h2>
+    <div class="cards">
+      ${providers.map(p => `
+        <div class="card" id="provider-${p.id}">
+          <div class="card-header">
+            <h3><span class="icon">${p.icon}</span> ${p.name}</h3>
+            <span class="status ${p.hasKey ? 'online' : 'offline'}">
+              <span class="status-check"></span> ${p.hasKey ? 'Configured' : 'No key'}
+            </span>
+          </div>
+          <p style="color:var(--muted);font-size:12px">${p.website}</p>
+          ${p.hasKey ? `<p style="color:var(--muted);font-size:12px;margin-top:4px">Key: ${p.keyPreview}</p>` : ''}
+          <div class="input-group" style="margin-top:12px">
+            <label>API Key</label>
+            <input type="password" id="key-${p.id}" placeholder="${p.authHeader} ..." />
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary btn-sm" onclick="saveKey('${p.id}')">💾 Save</button>
+            ${p.hasKey ? `<button class="btn btn-secondary btn-sm" onclick="testKey('${p.id}')">🔍 Test</button>` : ''}
+            ${p.hasKey ? `<button class="btn btn-danger btn-sm" onclick="deleteKey('${p.id}')">🗑 Delete</button>` : ''}
+          </div>
+          <div id="test-result-${p.id}" style="margin-top:8px;font-size:12px"></div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderProviderEvents() {
+  // Events handled via inline onclick
+}
+
+async function saveKey(providerId) {
+  const key = document.getElementById(`key-${providerId}`).value.trim();
+  if (!key) return toast("Please enter an API key", "error");
+  await api("POST", `/api/providers/${providerId}/key`, { key });
+  toast(`${providerId} key saved`);
+  renderPage();
+}
+
+async function deleteKey(providerId) {
+  await api("DELETE", `/api/providers/${providerId}/key`);
+  toast(`${providerId} key removed`);
+  renderPage();
+}
+
+async function testKey(providerId) {
+  const resultEl = document.getElementById(`test-result-${providerId}`);
+  resultEl.textContent = "Testing...";
+  const res = await api("POST", `/api/providers/${providerId}/test`);
+  if (res.ok) {
+    resultEl.innerHTML = `<span style="color:var(--green)">✓ OK — ${res.modelCount} models available</span>`;
+  } else {
+    resultEl.innerHTML = `<span style="color:var(--red)">✗ ${res.error}</span>`;
+  }
+}
+
+// ─── Models ──────────────────────────────────────────────────────
+async function renderModels() {
+  const data = await api("GET", "/api/models");
+  const catalog = data.catalog || [];
+  const selections = data.selections || {};
+
+  // Group by provider
+  const byProvider = {};
+  for (const m of catalog) {
+    const parts = m.slug.split("/");
+    const providerId = parts[0];
+    if (!byProvider[providerId]) byProvider[providerId] = [];
+    byProvider[providerId].push({ slug: m.slug, id: parts.slice(1).join("/"), display: m.display_name });
+  }
+
+  const providers = await api("GET", "/api/providers");
+
+  return `
+    <h2>🧠 Model Selection</h2>
+    <div class="btn-row" style="margin-bottom:20px">
+      <button class="btn btn-primary" onclick="refreshModels()">🔄 Refresh from providers</button>
+      <button class="btn btn-secondary" onclick="saveSelections()">💾 Save selections</button>
+    </div>
+    <p class="refresh-indicator" id="refresh-indicator"></p>
+    <div class="cards">
+      ${providers.map(p => {
+        const models = byProvider[p.id] || [];
+        const sel = selections[p.id] || [];
+        return `
+          <div class="card">
+            <div class="card-header">
+              <h3><span class="icon">${p.icon}</span> ${p.name}</h3>
+              <span class="status ${p.hasKey ? 'online' : 'offline'}">
+                <span class="status-check"></span> ${models.length} models
+              </span>
+            </div>
+            <div class="model-select">
+              ${models.length === 0 ? '<p style="color:var(--muted);font-size:12px">No models loaded. Refresh first.</p>' :
+                models.map(m => `
+                  <label>
+                    <input type="checkbox" value="${m.id}" class="model-cb-${p.id}" ${sel.length === 0 || sel.includes(m.id) ? 'checked' : ''}>
+                    ${m.display || m.id}
+                  </label>
+                `).join("")
+              }
+            </div>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function renderModelEvents() {}
+
+async function refreshModels() {
+  const indicator = document.getElementById("refresh-indicator");
+  if (indicator) indicator.textContent = "Fetching models from all providers...";
+  const res = await api("POST", "/api/models/refresh");
+  if (res.ok) {
+    toast(`Catalog refreshed — ${res.modelCount} models`);
+    renderPage();
+  } else {
+    toast("Refresh failed", "error");
+  }
+}
+
+async function saveSelections() {
+  const selections = {};
+  document.querySelectorAll("[class^='model-cb-']").forEach(cb => {
+    const providerId = cb.className.replace("model-cb-", "");
+    if (!selections[providerId]) selections[providerId] = [];
+    if (cb.checked) selections[providerId].push(cb.value);
+  });
+  await api("POST", "/api/models/selections", selections);
+  await refreshModels();
+  toast("Selections saved & catalog updated");
+}
+
+// ─── Profile ─────────────────────────────────────────────────────
+async function renderProfile() {
+  const profile = await api("GET", "/api/profile");
+  return `
+    <h2>🔄 Codex Profile</h2>
+    <div class="status-row">
+      <div class="stat-card">
+        <div class="stat-label">Active Profile</div>
+        <div class="stat-value">${profile.profile}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Current Model</div>
+        <div class="stat-value">${profile.model}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Provider</div>
+        <div class="stat-value">${profile.provider}</div>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-header"><h3>Switch to OmniCodex</h3></div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Uses all configured providers through the gateway</p>
+        <button class="btn btn-primary" onclick="switchProfile('omnicodex')">Switch to OmniCodex</button>
+        <div id="switch-result-omnicodex" style="margin-top:8px;font-size:12px"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Switch to Default</h3></div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Restore Codex default OpenAI profile</p>
+        <button class="btn btn-secondary" onclick="switchProfile('default')">Restore Default</button>
+        <div id="switch-result-default" style="margin-top:8px;font-size:12px"></div>
+      </div>
+    </div>
+  `;
+}
+
+function renderProfileEvents() {}
+
+async function switchProfile(target) {
+  const resultEl = document.getElementById(`switch-result-${target}`);
+  if (resultEl) resultEl.textContent = "Switching...";
+  try {
+    const res = await api("POST", "/api/profile/switch", { target });
+    if (res.ok) {
+      if (resultEl) resultEl.innerHTML = '<span style="color:var(--green)">✓ Profile switched</span>';
+      toast(`Profile switched to ${target}`);
+      setTimeout(renderPage, 1000);
+    } else {
+      if (resultEl) resultEl.innerHTML = `<span style="color:var(--red)">✗ ${res.error}</span>`;
+    }
+  } catch (err) {
+    if (resultEl) resultEl.textContent = `Error: ${err.message}`;
+  }
+}
+
+// ─── Logs ────────────────────────────────────────────────────────
+function renderLogs() {
+  return `
+    <h2>📋 Live Logs</h2>
+    <div class="log-view" id="log-view"><div class="log-line">Connecting to log stream...</div></div>
+    <script>(()=>{const v=document.getElementById("log-view");const s=new EventSource(API+"/api/logs/stream");s.onmessage=e=>{try{const d=JSON.parse(e.data);const l=document.createElement("div");l.className="log-line";l.textContent=d;v.appendChild(l);v.scrollTop=v.scrollHeight}catch{}};s.onerror=()=>{setTimeout(()=>v.innerHTML='<div class="log-line error">Log stream disconnected. Refresh to reconnect.</div>',3000)}})()</scr`+`ipt>
+  `;
+}
+
+function formatUptime(s) {
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
+  return `${h}h ${m}m ${sec}s`;
+}
+
+renderPage();
+</script>
+</body>
+</html>

@@ -1,0 +1,4191 @@
+{
+  "models": [
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-opus-4-5",
+      "display_name": "Claude Opus 4.5 (latest)",
+      "description": "OmniCodex route: anthropic/claude-opus-4-5",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 0,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-haiku-4-5-20251001",
+      "display_name": "Claude Haiku 4.5",
+      "description": "OmniCodex route: anthropic/claude-haiku-4-5-20251001",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 1,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "anthropic/claude-3-5-haiku-20241022",
+      "display_name": "Claude Haiku 3.5",
+      "description": "OmniCodex route: anthropic/claude-3-5-haiku-20241022",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 2,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-opus-4-0",
+      "display_name": "Claude Opus 4 (latest)",
+      "description": "OmniCodex route: anthropic/claude-opus-4-0",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 3,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "anthropic/claude-3-opus-20240229",
+      "display_name": "Claude Opus 3",
+      "description": "OmniCodex route: anthropic/claude-3-opus-20240229",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 4,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-opus-4-1-20250805",
+      "display_name": "Claude Opus 4.1",
+      "description": "OmniCodex route: anthropic/claude-opus-4-1-20250805",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 5,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-sonnet-4-5",
+      "display_name": "Claude Sonnet 4.5 (latest)",
+      "description": "OmniCodex route: anthropic/claude-sonnet-4-5",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 6,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1000000,
+      "max_context_window": 1000000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-opus-4-7",
+      "display_name": "Claude Opus 4.7",
+      "description": "OmniCodex route: anthropic/claude-opus-4-7",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 7,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-opus-4-5-20251101",
+      "display_name": "Claude Opus 4.5",
+      "description": "OmniCodex route: anthropic/claude-opus-4-5-20251101",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 8,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "anthropic/claude-3-5-sonnet-20241022",
+      "display_name": "Claude Sonnet 3.5 v2",
+      "description": "OmniCodex route: anthropic/claude-3-5-sonnet-20241022",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 9,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1000000,
+      "max_context_window": 1000000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-opus-4-8",
+      "display_name": "Claude Opus 4.8",
+      "description": "OmniCodex route: anthropic/claude-opus-4-8",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 10,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-opus-4-20250514",
+      "display_name": "Claude Opus 4",
+      "description": "OmniCodex route: anthropic/claude-opus-4-20250514",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 11,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "anthropic/claude-3-5-sonnet-20240620",
+      "display_name": "Claude Sonnet 3.5",
+      "description": "OmniCodex route: anthropic/claude-3-5-sonnet-20240620",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 12,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-sonnet-4-20250514",
+      "display_name": "Claude Sonnet 4",
+      "description": "OmniCodex route: anthropic/claude-sonnet-4-20250514",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 13,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-opus-4-1",
+      "display_name": "Claude Opus 4.1 (latest)",
+      "description": "OmniCodex route: anthropic/claude-opus-4-1",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 14,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "anthropic/claude-3-haiku-20240307",
+      "display_name": "Claude Haiku 3",
+      "description": "OmniCodex route: anthropic/claude-3-haiku-20240307",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 15,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1000000,
+      "max_context_window": 1000000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-fable-5",
+      "display_name": "Claude Fable 5",
+      "description": "OmniCodex route: anthropic/claude-fable-5",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 16,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-sonnet-4-0",
+      "display_name": "Claude Sonnet 4 (latest)",
+      "description": "OmniCodex route: anthropic/claude-sonnet-4-0",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 17,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-3-7-sonnet-20250219",
+      "display_name": "Claude Sonnet 3.7",
+      "description": "OmniCodex route: anthropic/claude-3-7-sonnet-20250219",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 18,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-haiku-4-5",
+      "display_name": "Claude Haiku 4.5 (latest)",
+      "description": "OmniCodex route: anthropic/claude-haiku-4-5",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 19,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1000000,
+      "max_context_window": 1000000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-opus-4-6",
+      "display_name": "Claude Opus 4.6",
+      "description": "OmniCodex route: anthropic/claude-opus-4-6",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 20,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-sonnet-4-5-20250929",
+      "display_name": "Claude Sonnet 4.5",
+      "description": "OmniCodex route: anthropic/claude-sonnet-4-5-20250929",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 21,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "anthropic/claude-3-sonnet-20240229",
+      "display_name": "Claude Sonnet 3",
+      "description": "OmniCodex route: anthropic/claude-3-sonnet-20240229",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 22,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1000000,
+      "max_context_window": 1000000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "anthropic/claude-sonnet-4-6",
+      "display_name": "Claude Sonnet 4.6",
+      "description": "OmniCodex route: anthropic/claude-sonnet-4-6",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 23,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "anthropic/claude-3-5-haiku-latest",
+      "display_name": "Claude Haiku 3.5 (latest)",
+      "description": "OmniCodex route: anthropic/claude-3-5-haiku-latest",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 24,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1000000,
+      "max_context_window": 1000000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "deepseek/deepseek-v4-flash",
+      "display_name": "DeepSeek V4 Flash",
+      "description": "OmniCodex route: deepseek/deepseek-v4-flash",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 25,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1000000,
+      "max_context_window": 1000000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "deepseek/deepseek-v4-pro",
+      "display_name": "DeepSeek V4 Pro",
+      "description": "OmniCodex route: deepseek/deepseek-v4-pro",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 26,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-3.1-flash-lite",
+      "display_name": "Gemini 3.1 Flash Lite",
+      "description": "OmniCodex route: google/gemini-3.1-flash-lite",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 27,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-2.5-pro",
+      "display_name": "Gemini 2.5 Pro",
+      "description": "OmniCodex route: google/gemini-2.5-pro",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 28,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-2.5-flash",
+      "display_name": "Gemini 2.5 Flash",
+      "description": "OmniCodex route: google/gemini-2.5-flash",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 29,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-3.5-flash",
+      "display_name": "Gemini 3.5 Flash",
+      "description": "OmniCodex route: google/gemini-3.5-flash",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 30,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 262144,
+      "max_context_window": 262144,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemma-4-31b-it",
+      "display_name": "Gemma 4 31B IT",
+      "description": "OmniCodex route: google/gemma-4-31b-it",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 31,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "google/gemini-2.0-flash",
+      "display_name": "Gemini 2.0 Flash",
+      "description": "OmniCodex route: google/gemini-2.0-flash",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 32,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-3.1-pro-preview-customtools",
+      "display_name": "Gemini 3.1 Pro Preview Custom Tools",
+      "description": "OmniCodex route: google/gemini-3.1-pro-preview-customtools",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 33,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-flash-lite-latest",
+      "display_name": "Gemini Flash-Lite Latest",
+      "description": "OmniCodex route: google/gemini-flash-lite-latest",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 34,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-2.5-flash-lite",
+      "display_name": "Gemini 2.5 Flash-Lite",
+      "description": "OmniCodex route: google/gemini-2.5-flash-lite",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 35,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-3.1-pro-preview",
+      "display_name": "Gemini 3.1 Pro Preview",
+      "description": "OmniCodex route: google/gemini-3.1-pro-preview",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 36,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 262144,
+      "max_context_window": 262144,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemma-4-26b-a4b-it",
+      "display_name": "Gemma 4 26B A4B IT",
+      "description": "OmniCodex route: google/gemma-4-26b-a4b-it",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 37,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-3-pro-preview",
+      "display_name": "Gemini 3 Pro Preview",
+      "description": "OmniCodex route: google/gemini-3-pro-preview",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 38,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-3-flash-preview",
+      "display_name": "Gemini 3 Flash Preview",
+      "description": "OmniCodex route: google/gemini-3-flash-preview",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 39,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-flash-latest",
+      "display_name": "Gemini Flash Latest",
+      "description": "OmniCodex route: google/gemini-flash-latest",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 40,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "google/gemini-3.1-flash-lite-preview",
+      "display_name": "Gemini 3.1 Flash Lite Preview",
+      "description": "OmniCodex route: google/gemini-3.1-flash-lite-preview",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 41,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1048576,
+      "max_context_window": 1048576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "google/gemini-2.0-flash-lite",
+      "display_name": "Gemini 2.0 Flash-Lite",
+      "description": "OmniCodex route: google/gemini-2.0-flash-lite",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 42,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 131072,
+      "max_context_window": 131072,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "lmstudio/openai/gpt-oss-20b",
+      "display_name": "GPT OSS 20B",
+      "description": "OmniCodex route: lmstudio/openai/gpt-oss-20b",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 43,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 262144,
+      "max_context_window": 262144,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "lmstudio/qwen/qwen3-30b-a3b-2507",
+      "display_name": "Qwen3 30B A3B 2507",
+      "description": "OmniCodex route: lmstudio/qwen/qwen3-30b-a3b-2507",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 44,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 262144,
+      "max_context_window": 262144,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "lmstudio/qwen/qwen3-coder-30b",
+      "display_name": "Qwen3 Coder 30B",
+      "description": "OmniCodex route: lmstudio/qwen/qwen3-coder-30b",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 45,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "mock/echo",
+      "display_name": "OmniCodex Echo",
+      "description": "OmniCodex route: mock/echo",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 46,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "mock/tool",
+      "display_name": "OmniCodex Tool Test",
+      "description": "OmniCodex route: mock/tool",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 47,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/o3",
+      "display_name": "o3",
+      "description": "OmniCodex route: openai/o3",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 48,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.2-pro",
+      "display_name": "GPT-5.2 Pro",
+      "description": "OmniCodex route: openai/gpt-5.2-pro",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 49,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5",
+      "display_name": "GPT-5",
+      "description": "OmniCodex route: openai/gpt-5",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 50,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5-pro",
+      "display_name": "GPT-5 Pro",
+      "description": "OmniCodex route: openai/gpt-5-pro",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 51,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "openai/gpt-4o",
+      "display_name": "GPT-4o",
+      "description": "OmniCodex route: openai/gpt-4o",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 52,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 8192,
+      "max_context_window": 8192,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "openai/gpt-4",
+      "display_name": "GPT-4",
+      "description": "OmniCodex route: openai/gpt-4",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 53,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/o4-mini",
+      "display_name": "o4-mini",
+      "description": "OmniCodex route: openai/o4-mini",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 54,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/o3-pro",
+      "display_name": "o3-pro",
+      "description": "OmniCodex route: openai/o3-pro",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 55,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "openai/gpt-4o-2024-05-13",
+      "display_name": "GPT-4o (2024-05-13)",
+      "description": "OmniCodex route: openai/gpt-4o-2024-05-13",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 56,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.4-nano",
+      "display_name": "GPT-5.4 nano",
+      "description": "OmniCodex route: openai/gpt-5.4-nano",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 57,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.1-codex",
+      "display_name": "GPT-5.1 Codex",
+      "description": "OmniCodex route: openai/gpt-5.1-codex",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 58,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.3-codex-spark",
+      "display_name": "GPT-5.3 Codex Spark",
+      "description": "OmniCodex route: openai/gpt-5.3-codex-spark",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 59,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.1-codex-max",
+      "display_name": "GPT-5.1 Codex Max",
+      "description": "OmniCodex route: openai/gpt-5.1-codex-max",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 60,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "openai/gpt-5.3-chat-latest",
+      "display_name": "GPT-5.3 Chat (latest)",
+      "description": "OmniCodex route: openai/gpt-5.3-chat-latest",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 61,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "openai/gpt-4o-2024-08-06",
+      "display_name": "GPT-4o (2024-08-06)",
+      "description": "OmniCodex route: openai/gpt-4o-2024-08-06",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 62,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/o3-mini",
+      "display_name": "o3-mini",
+      "description": "OmniCodex route: openai/o3-mini",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 63,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.2",
+      "display_name": "GPT-5.2",
+      "description": "OmniCodex route: openai/gpt-5.2",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 64,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.3-codex",
+      "display_name": "GPT-5.3 Codex",
+      "description": "OmniCodex route: openai/gpt-5.3-codex",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 65,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.1-codex-mini",
+      "display_name": "GPT-5.1 Codex mini",
+      "description": "OmniCodex route: openai/gpt-5.1-codex-mini",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 66,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.1-chat-latest",
+      "display_name": "GPT-5.1 Chat",
+      "description": "OmniCodex route: openai/gpt-5.1-chat-latest",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 67,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.2-chat-latest",
+      "display_name": "GPT-5.2 Chat",
+      "description": "OmniCodex route: openai/gpt-5.2-chat-latest",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 68,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/o4-mini-deep-research",
+      "display_name": "o4-mini-deep-research",
+      "description": "OmniCodex route: openai/o4-mini-deep-research",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 69,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1047576,
+      "max_context_window": 1047576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "openai/gpt-4.1-nano",
+      "display_name": "GPT-4.1 nano",
+      "description": "OmniCodex route: openai/gpt-4.1-nano",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 70,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "openai/gpt-4o-2024-11-20",
+      "display_name": "GPT-4o (2024-11-20)",
+      "description": "OmniCodex route: openai/gpt-4o-2024-11-20",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 71,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/o1",
+      "display_name": "o1",
+      "description": "OmniCodex route: openai/o1",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 72,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/o1-pro",
+      "display_name": "o1-pro",
+      "description": "OmniCodex route: openai/o1-pro",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 73,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1050000,
+      "max_context_window": 1050000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.4",
+      "display_name": "GPT-5.4",
+      "description": "OmniCodex route: openai/gpt-5.4",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 74,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.4-mini",
+      "display_name": "GPT-5.4 mini",
+      "description": "OmniCodex route: openai/gpt-5.4-mini",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 75,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1047576,
+      "max_context_window": 1047576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "openai/gpt-4.1",
+      "display_name": "GPT-4.1",
+      "description": "OmniCodex route: openai/gpt-4.1",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 76,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 200000,
+      "max_context_window": 200000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/o3-deep-research",
+      "display_name": "o3-deep-research",
+      "description": "OmniCodex route: openai/o3-deep-research",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 77,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5-mini",
+      "display_name": "GPT-5 Mini",
+      "description": "OmniCodex route: openai/gpt-5-mini",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 78,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1047576,
+      "max_context_window": 1047576,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "openai/gpt-4.1-mini",
+      "display_name": "GPT-4.1 mini",
+      "description": "OmniCodex route: openai/gpt-4.1-mini",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 79,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "openai/gpt-4-turbo",
+      "display_name": "GPT-4 Turbo",
+      "description": "OmniCodex route: openai/gpt-4-turbo",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 80,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5-nano",
+      "display_name": "GPT-5 Nano",
+      "description": "OmniCodex route: openai/gpt-5-nano",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 81,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1050000,
+      "max_context_window": 1050000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.4-pro",
+      "display_name": "GPT-5.4 Pro",
+      "description": "OmniCodex route: openai/gpt-5.4-pro",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 82,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1050000,
+      "max_context_window": 1050000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.5-pro",
+      "display_name": "GPT-5.5 Pro",
+      "description": "OmniCodex route: openai/gpt-5.5-pro",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 83,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 128000,
+      "max_context_window": 128000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "none",
+      "supported_reasoning_levels": [],
+      "slug": "openai/gpt-4o-mini",
+      "display_name": "GPT-4o mini",
+      "description": "OmniCodex route: openai/gpt-4o-mini",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 84,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5-codex",
+      "display_name": "GPT-5-Codex",
+      "description": "OmniCodex route: openai/gpt-5-codex",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 85,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.2-codex",
+      "display_name": "GPT-5.2 Codex",
+      "description": "OmniCodex route: openai/gpt-5.2-codex",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 86,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.1",
+      "display_name": "GPT-5.1",
+      "description": "OmniCodex route: openai/gpt-5.1",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 87,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 1050000,
+      "max_context_window": 1050000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai/gpt-5.5",
+      "display_name": "GPT-5.5",
+      "description": "OmniCodex route: openai/gpt-5.5",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 88,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 272000,
+      "max_context_window": 272000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai-chatgpt/gpt-5.5",
+      "display_name": "GPT-5.5 (ChatGPT OAuth)",
+      "description": "OmniCodex route: openai-chatgpt/gpt-5.5",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 89,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 272000,
+      "max_context_window": 272000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai-chatgpt/gpt-5.4",
+      "display_name": "GPT-5.4 (ChatGPT OAuth)",
+      "description": "OmniCodex route: openai-chatgpt/gpt-5.4",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 90,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    },
+    {
+      "prefer_websockets": false,
+      "support_verbosity": false,
+      "default_verbosity": null,
+      "apply_patch_tool_type": null,
+      "web_search_tool_type": "text",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supports_image_detail_original": false,
+      "truncation_policy": {
+        "mode": "tokens",
+        "limit": 10000
+      },
+      "supports_parallel_tool_calls": true,
+      "context_window": 400000,
+      "max_context_window": 400000,
+      "auto_compact_token_limit": null,
+      "default_reasoning_summary": "none",
+      "default_reasoning_level": "medium",
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Lower reasoning effort"
+        },
+        {
+          "effort": "medium",
+          "description": "Balanced reasoning effort"
+        },
+        {
+          "effort": "high",
+          "description": "Higher reasoning effort"
+        }
+      ],
+      "slug": "openai-chatgpt/gpt-5.4-mini",
+      "display_name": "GPT-5.4 Mini (ChatGPT OAuth)",
+      "description": "OmniCodex route: openai-chatgpt/gpt-5.4-mini",
+      "shell_type": "shell_command",
+      "visibility": "list",
+      "supported_in_api": true,
+      "availability_nux": null,
+      "upgrade": null,
+      "priority": 91,
+      "base_instructions": "You are Codex, a coding agent. Use the provided tools to complete the user's task.",
+      "experimental_supported_tools": [],
+      "supports_search_tool": false,
+      "supports_reasoning_summaries": false
+    }
+  ]
+}
