@@ -1,10 +1,27 @@
-﻿import { copyFileSync, existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { homedir } from "node:os";
+
+import { existsSync as snapExists, readFileSync as snapRead } from "node:fs";
+import { resolve as snapResolve } from "node:path";
+function loadSnapshotProviders(): Array<{ id: string; name: string; protocol: string; api?: string }> {
+  const path = snapResolve("data", "providers.snapshot.json");
+  if (!snapExists(path)) return [];
+  try {
+    const data = JSON.parse(snapRead(path, "utf8"));
+    const providers = data.providers ?? {};
+    return Object.entries(providers).map(([id, p]: [string, any]) => ({
+      id,
+      name: p.name ?? id,
+      protocol: p.protocol ?? "unknown",
+      api: p.api ?? ""
+    }));
+  } catch { return []; }
+}
 import { readFile } from "node:fs/promises";
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
 
-// ─── Log ring buffer (shared with gateway via module-level singleton) ────────
+// --- Log ring buffer (shared with gateway via module-level singleton) --------
 const LOG_BUFFER_SIZE = 200;
 export const logBuffer: string[] = [];
 const sseClients: ServerResponse[] = [];
@@ -17,7 +34,7 @@ export function pushLog(entry: string): void {
   }
 }
 
-// ─── Paths ───────────────────────────────────────────────────────────────────
+// --- Paths -------------------------------------------------------------------
 function codexHome(): string {
   return process.env.CODEX_HOME ? resolve(process.env.CODEX_HOME) : join(homedir(), ".codex");
 }
@@ -34,7 +51,7 @@ function configToml(): string {
   return join(codexHome(), "config.toml");
 }
 
-// ─── Key storage (omnicodex.keys.json) ───────────────────────────────────────
+// --- Key storage (omnicodex.keys.json) ---------------------------------------
 type KeyStore = Record<string, string>;
 
 function loadKeys(): KeyStore {
@@ -64,7 +81,7 @@ function providerEnvKey(providerId: string): string {
   return map[providerId] ?? `${providerId.toUpperCase()}_API_KEY`;
 }
 
-// ─── Provider definitions ─────────────────────────────────────────────────────
+// --- Provider definitions -----------------------------------------------------
 export type ProviderDef = {
   id: string;
   name: string;
@@ -78,33 +95,33 @@ export type ProviderDef = {
 
 export const PROVIDERS: Record<string, ProviderDef> = {
   deepseek: {
-    id: "deepseek", name: "DeepSeek", icon: "🔷",
+    id: "deepseek", name: "DeepSeek", icon: "??",
     baseURL: "https://api.deepseek.com", authHeader: "Bearer",
     color: "#1a6cf6", website: "https://platform.deepseek.com",
   },
   openrouter: {
-    id: "openrouter", name: "OpenRouter", icon: "🔀",
+    id: "openrouter", name: "OpenRouter", icon: "??",
     baseURL: "https://openrouter.ai/api/v1", authHeader: "Bearer",
     color: "#6c47ff", website: "https://openrouter.ai",
   },
   groq: {
-    id: "groq", name: "Groq", icon: "⚡",
+    id: "groq", name: "Groq", icon: "?",
     baseURL: "https://api.groq.com/openai/v1", authHeader: "Bearer",
     color: "#f55036", website: "https://console.groq.com",
   },
   openai: {
-    id: "openai", name: "OpenAI", icon: "🤖",
+    id: "openai", name: "OpenAI", icon: "??",
     baseURL: "https://api.openai.com/v1", authHeader: "Bearer",
     color: "#10a37f", website: "https://platform.openai.com",
   },
   opencode: {
-    id: "opencode", name: "OpenCode Go", icon: "🚀",
+    id: "opencode", name: "OpenCode Go", icon: "??",
     baseURL: "https://api.opencode.com/v1", authHeader: "Bearer",
     color: "#ff6b35", website: "https://opencode.com",
   },
 };
 
-// ─── Fetch models from provider ───────────────────────────────────────────────
+// --- Fetch models from provider -----------------------------------------------
 type RemoteModel = { id: string; context?: number; owned_by?: string };
 
 async function fetchProviderModels(def: ProviderDef, apiKey: string): Promise<RemoteModel[]> {
@@ -122,7 +139,7 @@ async function fetchProviderModels(def: ProviderDef, apiKey: string): Promise<Re
   return data.data ?? data.models ?? [];
 }
 
-// ─── Load/save model selections ───────────────────────────────────────────────
+// --- Load/save model selections -----------------------------------------------
 type SelectionStore = Record<string, string[]>;
 
 function selectionsFile(): string {
@@ -136,7 +153,7 @@ function saveSelections(sel: SelectionStore): void {
   writeFileSync(selectionsFile(), JSON.stringify(sel, null, 2), "utf8");
 }
 
-// ─── Read current Codex profile ───────────────────────────────────────────────
+// --- Read current Codex profile -----------------------------------------------
 function readCodexProfile(): { profile: string; model: string; provider: string } {
   const toml = configToml();
   if (!existsSync(toml)) return { profile: "unknown", model: "unknown", provider: "unknown" };
@@ -151,7 +168,7 @@ function readCodexProfile(): { profile: string; model: string; provider: string 
   };
 }
 
-// ─── Switch Codex profile (direct TOML edit, no external script) ──────────────
+// --- Switch Codex profile (direct TOML edit, no external script) --------------
 async function switchProfile(target: "default" | "omnicodex"): Promise<string> {
   const tomlPath = configToml();
   if (!existsSync(tomlPath)) throw new Error("Codex config.toml not found");
@@ -178,7 +195,7 @@ async function switchProfile(target: "default" | "omnicodex"): Promise<string> {
     content = "# active_profile: default\n" + content;
   } else {
     const omniProfile = join(codexHome(), "omnicodex.config.toml");
-    if (!existsSync(omniProfile)) throw new Error("omnicodex.config.toml not found — run 'omnicodex codex install' first");
+    if (!existsSync(omniProfile)) throw new Error("omnicodex.config.toml not found � run 'omnicodex codex install' first");
     const omniContent = readFileSync(omniProfile, "utf8");
 
     const modelMatch = omniContent.match(/^model\s*=\s*"([^"]+)"/m);
@@ -232,7 +249,7 @@ async function switchProfile(target: "default" | "omnicodex"): Promise<string> {
   return `Switched to ${target} profile. Backup: ${backup}`;
 }
 
-// ─── HTTP helpers ─────────────────────────────────────────────────────────────
+// --- HTTP helpers -------------------------------------------------------------
 function json(res: ServerResponse, status: number, value: unknown): void {
   res.writeHead(status, { "content-type": "application/json; charset=utf-8", "access-control-allow-origin": "*" });
   res.end(JSON.stringify(value));
@@ -250,7 +267,7 @@ async function bodyText(req: IncomingMessage): Promise<string> {
   return Buffer.concat(chunks).toString("utf8");
 }
 
-// ─── Admin server ─────────────────────────────────────────────────────────────
+// --- Admin server -------------------------------------------------------------
 export function createAdminServer(config: { host: string; port: number }): Server {
   return createServer(async (req, res) => {
     cors(res);
@@ -260,18 +277,18 @@ export function createAdminServer(config: { host: string; port: number }): Serve
     const path = url.pathname;
 
     try {
-      // ── Serve admin UI ──────────────────────────────────────────────────────
+      // -- Serve admin UI ------------------------------------------------------
       if (req.method === "GET" && (path === "/" || path === "/admin" || path === "/index.html")) {
         const uiPath = resolve("public", "index.html");
         const html = existsSync(uiPath)
           ? await readFile(uiPath, "utf8")
-          : "<h1>Admin UI not found — create public/index.html</h1>";
+          : "<h1>Admin UI not found � create public/index.html</h1>";
         res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
         res.end(html);
         return;
       }
 
-      // ── GET /api/status ─────────────────────────────────────────────────────
+      // -- GET /api/status -----------------------------------------------------
       if (req.method === "GET" && path === "/api/status") {
         const profile = readCodexProfile();
         const keys = loadKeys();
@@ -284,7 +301,7 @@ export function createAdminServer(config: { host: string; port: number }): Serve
         });
       }
 
-      // ── GET /api/providers ─────────────────────────────────────────────────
+      // -- GET /api/providers -------------------------------------------------
       if (req.method === "GET" && path === "/api/providers") {
         const keys = loadKeys();
         const result = Object.values(PROVIDERS).map(def => ({
@@ -295,7 +312,7 @@ export function createAdminServer(config: { host: string; port: number }): Serve
         return json(res, 200, result);
       }
 
-      // ── POST /api/providers/:id/key ────────────────────────────────────────
+      // -- POST /api/providers/:id/key ----------------------------------------
       if (req.method === "POST" && path.match(/^\/api\/providers\/[\w-]+\/key$/)) {
         const providerId = path.split("/")[3];
         if (!PROVIDERS[providerId]) return json(res, 404, { error: "Unknown provider" });
@@ -306,7 +323,7 @@ export function createAdminServer(config: { host: string; port: number }): Serve
         return json(res, 200, { ok: true });
       }
 
-      // ── DELETE /api/providers/:id/key ──────────────────────────────────────
+      // -- DELETE /api/providers/:id/key --------------------------------------
       if (req.method === "DELETE" && path.match(/^\/api\/providers\/[\w-]+\/key$/)) {
         const providerId = path.split("/")[3];
         const keys = loadKeys();
@@ -315,7 +332,7 @@ export function createAdminServer(config: { host: string; port: number }): Serve
         return json(res, 200, { ok: true });
       }
 
-      // ── POST /api/providers/:id/test ───────────────────────────────────────
+      // -- POST /api/providers/:id/test ---------------------------------------
       if (req.method === "POST" && path.match(/^\/api\/providers\/[\w-]+\/test$/)) {
         const providerId = path.split("/")[3];
         const def = PROVIDERS[providerId];
@@ -331,7 +348,7 @@ export function createAdminServer(config: { host: string; port: number }): Serve
         }
       }
 
-      // ── GET /api/models ────────────────────────────────────────────────────
+      // -- GET /api/models ----------------------------------------------------
       if (req.method === "GET" && path === "/api/models") {
         const selections = loadSelections();
         const catalog = existsSync(catalogFile())
@@ -340,14 +357,14 @@ export function createAdminServer(config: { host: string; port: number }): Serve
         return json(res, 200, { catalog: catalog.models, selections });
       }
 
-      // ── POST /api/models/selections ────────────────────────────────────────
+      // -- POST /api/models/selections ----------------------------------------
       if (req.method === "POST" && path === "/api/models/selections") {
         const body = JSON.parse(await bodyText(req)) as SelectionStore;
         saveSelections(body);
         return json(res, 200, { ok: true });
       }
 
-      // ── POST /api/models/refresh ───────────────────────────────────────────
+      // -- POST /api/models/refresh -------------------------------------------
       if (req.method === "POST" && path === "/api/models/refresh") {
         const keys = loadKeys();
         const allModels: Record<string, RemoteModel[]> = {};
@@ -397,12 +414,12 @@ export function createAdminServer(config: { host: string; port: number }): Serve
         return json(res, 200, { ok: true, modelCount: catalogModels.length });
       }
 
-      // ── GET /api/profile ───────────────────────────────────────────────────
+      // -- GET /api/profile ---------------------------------------------------
       if (req.method === "GET" && path === "/api/profile") {
         return json(res, 200, readCodexProfile());
       }
 
-      // ── POST /api/profile/switch ───────────────────────────────────────────
+      // -- POST /api/profile/switch -------------------------------------------
       if (req.method === "POST" && path === "/api/profile/switch") {
         const body = JSON.parse(await bodyText(req)) as { target: string };
         if (body.target !== "default" && body.target !== "omnicodex") {
@@ -412,7 +429,7 @@ export function createAdminServer(config: { host: string; port: number }): Serve
         return json(res, 200, { ok: true, output });
       }
 
-      // ── GET /api/profile/download ──────────────────────────────────────────
+      // -- GET /api/profile/download ------------------------------------------
       if (req.method === "GET" && path === "/api/profile/download") {
         const tomlPath = configToml();
         if (!existsSync(tomlPath)) return json(res, 404, { error: "config.toml not found" });
@@ -428,7 +445,7 @@ export function createAdminServer(config: { host: string; port: number }): Serve
         return;
       }
 
-      // ── GET /api/logs/stream (SSE) ─────────────────────────────────────────
+      // -- GET /api/logs/stream (SSE) -----------------------------------------
       if (req.method === "GET" && path === "/api/logs/stream") {
         res.writeHead(200, {
           "content-type": "text/event-stream",
@@ -447,12 +464,103 @@ export function createAdminServer(config: { host: string; port: number }): Serve
         return;
       }
 
-      // ── GET /api/logs ──────────────────────────────────────────────────────
+      // -- GET /api/logs ------------------------------------------------------
       if (req.method === "GET" && path === "/api/logs") {
         return json(res, 200, { logs: logBuffer.slice(-100) });
       }
 
-      json(res, 404, { error: "Not found" });
+      
+      // -- GET /api/snapshot-providers ---------------------------------------
+      if (req.method === "GET" && path === "/api/snapshot-providers") {
+        return json(res, 200, loadSnapshotProviders());
+      }
+
+      // -- POST /api/providers/custom ----------------------------------------
+      if (req.method === "POST" && path === "/api/providers/custom") {
+        const body = JSON.parse(await bodyText(req)) as { id: string; name: string; baseURL: string; authHeader: string; website: string };
+        if (!body.id || !body.name || !body.baseURL) return json(res, 400, { error: "id, name, baseURL required" });
+        (PROVIDERS as any)[body.id] = {
+          id: body.id, name: body.name,
+          baseURL: body.baseURL, authHeader: (body.authHeader as any) || "Bearer",
+          website: body.website || body.baseURL,
+          icon: "??", color: "#6366f1"
+        };
+        return json(res, 200, { ok: true });
+      }
+
+
+      // -- POST /api/providers/import-snapshot ------------------------------
+      if (req.method === 'POST' && path === '/api/providers/import-snapshot') {
+        const body = JSON.parse(await bodyText(req)) as { ids: string[] };
+        if (!body.ids || !body.ids.length) return json(res, 400, { error: 'ids array required' });
+        const snapshot = loadSnapshotProviders();
+        const added: string[] = [];
+        for (const sid of body.ids) {
+          const sp = snapshot.find(s => s.id === sid);
+          if (!sp || PROVIDERS[sid]) continue;
+          (PROVIDERS as any)[sid] = {
+            id: sid, name: sp.name,
+            baseURL: sp.api || 'https://api.' + sid + '.com/v1',
+            authHeader: 'Bearer',
+            website: sp.api || 'https://' + sid + '.com',
+            icon: '??', color: '#6366f1'
+          };
+          added.push(sid);
+        }
+        return json(res, 200, { ok: true, added });
+      }
+      // -- POST /api/playground/send -----------------------------------------
+      if (req.method === "POST" && path === "/api/playground/send") {
+        const body = JSON.parse(await bodyText(req)) as { model: string; system: string; prompt: string };
+        if (!body.model || !body.prompt) return json(res, 400, { error: "model and prompt required" });
+
+        const slash = body.model.indexOf("/");
+        if (slash < 1) return json(res, 400, { error: "model must be provider/model format" });
+        const providerId = body.model.slice(0, slash);
+        const upstreamModel = body.model.slice(slash + 1);
+
+        const def = PROVIDERS[providerId];
+        if (!def) return json(res, 404, { error: `Unknown provider: ${providerId}` });
+
+        const keys = loadKeys();
+        const apiKey = keys[providerId];
+        if (!apiKey) return json(res, 400, { error: `No API key for ${providerId}` });
+
+        try {
+          const messages: any[] = [];
+          if (body.system) messages.push({ role: "system", content: body.system });
+          messages.push({ role: "user", content: body.prompt });
+
+          const chatRes = await fetch(`${def.baseURL}/chat/completions`, {
+            method: "POST",
+            headers: {
+              "Authorization": `${def.authHeader} ${apiKey}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ model: upstreamModel, messages, max_tokens: 1024 }),
+            signal: AbortSignal.timeout(30_000)
+          });
+
+          if (!chatRes.ok) {
+            const errText = await chatRes.text();
+            return json(res, 200, { ok: false, error: `${chatRes.status}: ${errText.slice(0, 200)}` });
+          }
+
+          const chatData = await chatRes.json() as any;
+          const text = chatData.choices?.[0]?.message?.content ?? JSON.stringify(chatData);
+          return json(res, 200, { ok: true, text });
+        } catch (err) {
+          return json(res, 200, { ok: false, error: err instanceof Error ? err.message : String(err) });
+        }
+      }
+      // -- POST /api/restart ------------------------------------------------
+      if (req.method === "POST" && path === "/api/restart") {
+        json(res, 200, { ok: true, message: "Restarting..." });
+        setTimeout(() => { process.exit(0); }, 500);
+        return;
+      }
+
+            json(res, 404, { error: "Not found" });
     } catch (err) {
       json(res, 500, { error: err instanceof Error ? err.message : "Unknown error" });
     }

@@ -63,6 +63,16 @@ function uninstallCodex(): void {
   console.log(`Removed OmniCodex profile: ${profile}`);
 }
 
+process.on("uncaughtException", (err) => {
+  console.error(JSON.stringify({ event: "fatal", message: err.message, stack: String(err.stack).split("\n").slice(0, 5).join(" | ") }));
+  process.exit(1);
+});
+process.on("unhandledRejection", (reason) => {
+  const msg = reason instanceof Error ? reason.message : String(reason);
+  console.error(JSON.stringify({ event: "fatal", message: msg, unhandledRejection: true }));
+  process.exit(1);
+});
+
 if (command === "serve") {
   // Gateway on configured port
   const gateway = createGatewayServer(config);

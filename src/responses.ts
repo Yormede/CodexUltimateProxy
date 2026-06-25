@@ -239,12 +239,14 @@ export function toChatRequest(body: Json, model: string): Json {
     stream_options: { include_usage: true },
     max_tokens: typeof body.max_output_tokens === "number" ? body.max_output_tokens : undefined
   };
-  if (model.includes("deepseek") || model.includes("reasoner")) {
-    // Désactiver le thinking mode côté proxy — évite tous les problèmes de reasoning_content
-    // DeepSeek fonctionne parfaitement sans thinking; on supprime aussi tout reasoning_content injecté
-    result.thinking = { type: "disabled" };
-    for (const msg of finalMessages as Json[]) {
-      delete (msg as Record<string, unknown>).reasoning_content;
+    if (model.includes("deepseek") || model.includes("reasoner")) {
+    if (body.thinking && typeof body.thinking === "object") {
+      result.thinking = body.thinking;
+    } else {
+      result.thinking = { type: "disabled" };
+      for (const msg of finalMessages as Json[]) {
+        delete (msg as Record<string, unknown>).reasoning_content;
+      }
     }
   }
   return result;

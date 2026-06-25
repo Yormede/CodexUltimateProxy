@@ -1,114 +1,132 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OmniCodex Gateway — Admin</title>
+<title>OmniCodex Gateway</title>
 <style>
-:root {
-  --bg: #0b0d17;
-  --card: #111827;
-  --card-hover: #1a2236;
-  --border: #1e293b;
-  --text: #e2e8f0;
-  --muted: #64748b;
-  --accent: #6366f1;
-  --green: #10b981;
-  --red: #ef4444;
-  --yellow: #f59e0b;
-  --orange: #f97316;
-  --radius: 10px;
-}
+:root{--bg:#07090e;--card:#0d1117;--card2:#111820;--border:#1a2332;--text:#e2e8f0;--muted:#64748b;--acc:#818cf8;--acc2:#6366f1;--green:#10b981;--green2:#059669;--red:#ef4444;--red2:#b91c1c;--amber:#f59e0b;--radius:8px;--xxs:.65rem;--xs:.72rem;--sm:.8rem;--md:.9rem}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Inter",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
-/* Sidebar */
-.sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:20px 0;display:flex;flex-direction:column;gap:4px;flex-shrink:0}
-.sidebar .logo{font-size:18px;font-weight:700;padding:8px 20px 20px;color:var(--accent);display:flex;align-items:center;gap:8px}
-.sidebar .logo span{font-size:22px}
-.nav-item{padding:10px 20px;cursor:pointer;color:var(--muted);font-size:14px;display:flex;align-items:center;gap:8px;border:none;background:none;width:100%;text-align:left;transition:.15s}
-.nav-item:hover{color:var(--text);background:var(--card-hover)}
-.nav-item.active{color:var(--text);background:var(--card-hover);border-left:3px solid var(--accent);padding-left:17px}
-/* Main */
-.main{flex:1;padding:30px;overflow-y:auto;max-height:100vh}
-h2{font-size:20px;font-weight:600;margin-bottom:20px}
-/* Cards */
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:.15s}
-.card:hover{border-color:#334155}
-.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
-.card-header h3{font-size:15px;font-weight:600;display:flex;align-items:center;gap:6px}
-.card-header .icon{font-size:20px}
-.status{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:3px 8px;border-radius:20px;font-weight:500}
+body{font-family:"Inter",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;font-size:var(--xs)}
+.sidebar{width:220px;background:var(--card);border-right:1px solid var(--border);padding:16px 0;display:flex;flex-direction:column;gap:2px;flex-shrink:0}
+.sidebar .logo{font-size:var(--sm);font-weight:700;padding:8px 16px 16px;color:var(--acc);display:flex;align-items:center;gap:8px;letter-spacing:-.01em}
+.sidebar .logo svg{width:22px;height:22px}
+.nav-item{padding:9px 16px;cursor:pointer;color:var(--muted);font-size:var(--xs);display:flex;align-items:center;gap:8px;border:none;background:none;width:100%;text-align:left;transition:.12s}
+.nav-item:hover{color:var(--text);background:var(--card2)}
+.nav-item svg{width:16px;height:16px;opacity:.7;flex-shrink:0}
+.nav-item.active{color:var(--text);background:var(--card2);border-left:2px solid var(--acc);padding-left:14px}
+.nav-item.active svg{opacity:1;color:var(--acc)}
+.main{flex:1;padding:24px 28px;overflow-y:auto;max-height:100vh}
+h2{font-size:1.05rem;font-weight:600;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+h3{font-size:var(--sm);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;transition:.12s}
+.card:hover{border-color:#2d3a4a}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.card-header h3{font-size:var(--xs);display:flex;align-items:center;gap:6px}
+.status{display:inline-flex;align-items:center;gap:5px;font-size:.65rem;padding:2px 8px;border-radius:20px;font-weight:500}
 .status.online{background:#064e3b;color:var(--green)}
 .status.offline{background:#450a0a;color:var(--red)}
-.status-check{width:7px;height:7px;border-radius:50%}
-.status.online .status-check{background:var(--green)}
-.status.offline .status-check{background:var(--red)}
-/* Inputs */
-.input-group{margin-bottom:12px}
-.input-group label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
-input[type="text"],input[type="password"]{width:100%;padding:10px 12px;background:#0f172a;border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;font-family:monospace;outline:none}
-input:focus{border-color:var(--accent)}
-.btn{padding:8px 14px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;transition:.15s;display:inline-flex;align-items:center;gap:6px}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{opacity:.9}
-.btn-danger{background:var(--red);color:#fff}
-.btn-secondary{background:var(--border);color:var(--text)}
-.btn-secondary:hover{background:#334155}
-.btn-sm{padding:5px 10px;font-size:12px}
-.btn-row{display:flex;gap:8px;margin-top:8px}
-/* Status row */
-.status-row{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;min-width:180px}
-.stat-card .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-.stat-card .stat-value{font-size:24px;font-weight:700;margin-top:4px}
-.stat-card .stat-sub{font-size:12px;color:var(--muted);margin-top:2px}
-/* Table */
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;padding:10px 12px;color:var(--muted);font-weight:500;font-size:11px;text-transform:uppercase;border-bottom:1px solid var(--border)}
-td{padding:10px 12px;border-bottom:1px solid #0f172a}
-tr:hover td{background:#0f172a}
-.model-tag{padding:3px 8px;background:#1a2236;border-radius:4px;font-family:monospace;font-size:12px}
-/* Logs */
-.log-view{background:#0a0a0a;border:1px solid var(--border);border-radius:var(--radius);padding:16px;max-height:400px;overflow-y:auto;font-family:monospace;font-size:12px;line-height:1.6}
-.log-line{padding:2px 0;color:var(--muted)}
-.log-line.error{color:var(--red)}
-.log-line.warn{color:var(--yellow)}
-/* Tabs */
-.tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:0}
-.tab{padding:8px 16px;color:var(--muted);cursor:pointer;font-size:13px;border:none;background:none;border-bottom:2px solid transparent;transition:.15s}
-.tab:hover{color:var(--text)}
-.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
-/* Toast */
-.toast{position:fixed;bottom:20px;right:20px;padding:12px 20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);font-size:13px;z-index:100;animation:slideUp .3s ease}
+.status-dot{width:6px;height:6px;border-radius:50%}
+.status.online .status-dot{background:var(--green)}
+.status.offline .status-dot{background:var(--red)}
+input[type="text"],input[type="password"],input[type="search"],textarea{width:100%;padding:8px 10px;background:#0a0e14;border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:var(--xxs);font-family:inherit;outline:none}
+input:focus,textarea:focus{border-color:var(--acc)}
+textarea{resize:vertical;font-family:"JetBrains Mono",monospace;font-size:.65rem;line-height:1.5;min-height:80px}
+label.label{display:block;font-size:.62rem;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.input-row{display:flex;gap:8px;align-items:end}
+.input-row>div{flex:1}
+.btn{padding:7px 14px;border:none;border-radius:6px;cursor:pointer;font-size:var(--xxs);font-weight:500;transition:.12s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.btn svg{width:14px;height:14px}
+.btn-primary{background:var(--acc);color:#fff}
+.btn-primary:hover{background:var(--acc2)}
+.btn-green{background:var(--green2);color:#fff}
+.btn-green:hover{background:var(--green)}
+.btn-danger{background:var(--red2);color:#fff}
+.btn-danger:hover{background:var(--red)}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--muted)}
+.btn-ghost:hover{color:var(--text);border-color:var(--muted)}
+.btn-sm{padding:4px 8px;font-size:.6rem}
+.btn-row{display:flex;gap:6px;flex-wrap:wrap}
+.status-row{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;min-width:160px;flex:1}
+.stat-label{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.stat-value{font-size:1.2rem;font-weight:700;margin-top:2px}
+.stat-sub{font-size:.62rem;color:var(--muted);margin-top:2px}
+.search-bar{position:relative;margin-bottom:16px}
+.search-bar input{padding-left:36px}
+.search-bar svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)}
+.model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px}
+.model-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
+.model-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.model-name{font-family:"JetBrains Mono",monospace;font-size:.65rem;font-weight:500;word-break:break-all}
+.model-provider{font-size:.58rem;color:var(--muted)}
+.model-actions{display:flex;gap:6px;margin-top:6px}
+.model-list-compact{max-height:280px;overflow-y:auto}
+.model-list-compact label{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:var(--xxs);cursor:pointer;border-radius:4px;transition:.08s}
+.model-list-compact label:hover{background:var(--card2)}
+.model-list-compact input[type="checkbox"]{accent-color:var(--acc);width:14px;height:14px;flex-shrink:0}
+.toolbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:.58rem;padding:2px 8px;border-radius:12px;background:var(--card2);border:1px solid var(--border);color:var(--muted)}
+.badge.active{background:#1a2740;border-color:var(--acc);color:var(--acc)}
+.chat-log{background:#05080c;border:1px solid var(--border);border-radius:var(--radius);padding:14px;min-height:150px;max-height:400px;overflow-y:auto;font-family:"JetBrains Mono",monospace;font-size:.6rem;line-height:1.6;margin-bottom:10px;white-space:pre-wrap}
+.chat-msg{margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #0a0e14}
+.chat-msg.user{color:var(--acc)}
+.chat-msg.assistant{color:var(--green)}
+.chat-msg.system{color:var(--amber)}
+.chat-msg.error{color:var(--red)}
+.toast{position:fixed;bottom:20px;right:20px;padding:10px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);font-size:var(--xxs);z-index:100;animation:su .25s ease;max-width:360px}
 .toast.success{border-color:var(--green)}
 .toast.error{border-color:var(--red)}
-@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes su{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .hidden{display:none!important}
-.model-select{max-height:300px;overflow-y:auto}
-.model-select label{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;cursor:pointer}
-.model-select input[type="checkbox"]{accent-color:var(--accent);width:15px;height:15px}
-.refresh-indicator{font-size:12px;color:var(--muted);margin-top:6px}
+.text-muted{font-size:.6rem;color:var(--muted)}.mono{font-family:"JetBrains Mono",monospace}
+.ma-0{margin:0}.mt-2{margin-top:4px}.mt-3{margin-top:8px}.mt-4{margin-top:12px}.mb-2{margin-bottom:4px}.mb-3{margin-bottom:8px}.mb-4{margin-bottom:12px}
+.flex-between{display:flex;justify-content:space-between;align-items:center}
+
 </style>
 </head>
 <body>
-<aside class="sidebar">
-  <div class="logo"><span>⚙️</span> OmniCodex</div>
-  <button class="nav-item active" data-page="dashboard">🏠 Dashboard</button>
-  <button class="nav-item" data-page="providers">🔑 Providers & Keys</button>
-  <button class="nav-item" data-page="models">🧠 Models</button>
-  <button class="nav-item" data-page="profile">🔄 Profile</button>
-  <button class="nav-item" data-page="logs">📋 Logs</button>
+<aside class="sidebar"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/><path d="M12 3v2"/><path d="M12 19v2"/><path d="M3 12h2"/><path d="M19 12h2"/></svg> OmniCodex</div>
+<button class="nav-item active" data-page="dashboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Dashboard</button>
+<button class="nav-item" data-page="providers"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Providers</button>
+<button class="nav-item" data-page="models"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="8" y1="8" x2="8" y2="8.01"/><line x1="8" y1="12" x2="8" y2="12.01"/><line x1="8" y1="16" x2="8" y2="16.01"/></svg> Models</button>
+<button class="nav-item" data-page="playground"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Playground</button>
+<button class="nav-item" data-page="profile"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile</button>
+<button class="nav-item" data-page="logs"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Logs</button>
 </aside>
 <main class="main" id="main"></main>
 <div id="toast" class="toast hidden"></div>
-
 <script>
-const API = "";
-let currentPage = "dashboard";
 
-// ─── Navigation ──────────────────────────────────────────────────
+const API = "";
+
+// SVG icons (Feather-inspired, minimal)
+const I = {
+  dashboard: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>',
+  providers: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
+  models: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="8" y1="8" x2="8" y2="8.01"/><line x1="8" y1="12" x2="8" y2="12.01"/><line x1="8" y1="16" x2="8" y2="16.01"/></svg>',
+  profile: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+  logs: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+  playground: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>',
+  search: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+  refresh: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>',
+  plus: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
+  trash: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+  download: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+  send: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>',
+  check: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  test: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+  box: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>',
+  lock: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+  globe: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  database: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+  omni: '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/><path d="M12 3v2"/><path d="M12 19v2"/><path d="M3 12h2"/><path d="M19 12h2"/></svg>'
+};
+
+let currentPage = "dashboard";
+let allModels = [], allSelections = {};
+
 document.querySelectorAll(".nav-item").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
@@ -118,336 +136,431 @@ document.querySelectorAll(".nav-item").forEach(btn => {
   });
 });
 
-// ─── Toast ───────────────────────────────────────────────────────
-function toast(msg, type = "success") {
-  const el = document.getElementById("toast");
+function toast(msg, type) {
+  type = type || "success";
+  var el = document.getElementById("toast");
   el.textContent = msg;
-  el.className = `toast ${type}`;
+  el.className = "toast " + type;
   el.classList.remove("hidden");
-  setTimeout(() => el.classList.add("hidden"), 3000);
+  setTimeout(function() { el.classList.add("hidden"); }, 3000);
 }
 
-// ─── API helpers ─────────────────────────────────────────────────
 async function api(method, path, body) {
-  const opts = { method, headers: { "Content-Type": "application/json" } };
+  var opts = { method: method, headers: { "Content-Type": "application/json" } };
   if (body) opts.body = JSON.stringify(body);
-  const res = await fetch(`${API}${path}`, opts);
+  var res = await fetch(API + path, opts);
   return res.json();
 }
 
-// ─── Render ──────────────────────────────────────────────────────
+async function restartGateway() {
+  var el = document.getElementById("restart-status");
+  el.innerHTML = "Restarting...";
+  try {
+    var r = await api("POST", "/api/restart");
+    if (r.ok) {
+      el.innerHTML = "<span style=\"color:var(--green)\">Restarted! Reconnecting in 3s...</span>";
+      setTimeout(function() { location.reload(); }, 3000);
+    } else {
+      el.innerHTML = "<span style=\"color:var(--red)\">Failed: " + (r.error || "unknown") + "</span>";
+    }
+  } catch(e) {
+    el.innerHTML = "<span style=\"color:var(--red)\">Error: " + e.message + "</span>";
+  }
+}
+
 async function renderPage() {
-  const main = document.getElementById("main");
+  var main = document.getElementById("main");
   try {
     switch (currentPage) {
       case "dashboard": main.innerHTML = await renderDashboard(); break;
-      case "providers": main.innerHTML = await renderProviders(); renderProviderEvents(); break;
-      case "models": main.innerHTML = await renderModels(); renderModelEvents(); break;
-      case "profile": main.innerHTML = await renderProfile(); renderProfileEvents(); break;
+      case "providers": main.innerHTML = await renderProviders(); break;
+      case "models": main.innerHTML = await renderModels(); initModelPage(); break;
+      case "playground": main.innerHTML = await renderPlayground(); break;
+      case "profile": main.innerHTML = await renderProfile(); break;
       case "logs": main.innerHTML = renderLogs(); break;
     }
-  } catch (err) {
-    main.innerHTML = `<h2>Error</h2><p>${err.message}</p>`;
-  }
+  } catch (e) { main.innerHTML = '<h2>Error</h2><p>' + e.message + '</p>'; }
 }
 
-// ─── Dashboard ───────────────────────────────────────────────────
 async function renderDashboard() {
-  const status = await api("GET", "/api/status");
-  return `
-    <h2>📊 Dashboard</h2>
-    <div class="status-row">
-      <div class="stat-card">
-        <div class="stat-label">Codex Profile</div>
-        <div class="stat-value">${status.profile}</div>
-        <div class="stat-sub">Model: ${status.model}</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Provider</div>
-        <div class="stat-value">${status.provider}</div>
-        <div class="stat-sub">Gateway on :${status.gatewayPort}</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Configured Keys</div>
-        <div class="stat-value">${status.configuredProviders.length}</div>
-        <div class="stat-sub">${status.configuredProviders.join(", ") || "none"}</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Uptime</div>
-        <div class="stat-value">${formatUptime(status.uptime)}</div>
-        <div class="stat-sub">Admin on :${status.adminPort}</div>
-      </div>
-    </div>
-    <h2>⏱ Quick Actions</h2>
-    <div class="cards">
-      <div class="card">
-        <div class="card-header"><h3>🔄 Switch Profile</h3></div>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Current: <strong>${status.profile}</strong></p>
-        <div class="btn-row">
-          <button class="btn btn-primary" onclick="switchProfile('${status.profile === "default" ? "omnicodex" : "default"}')">
-            Switch to ${status.profile === "default" ? "OmniCodex" : "Default"}
-          </button>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><h3>🧠 Refresh Models</h3></div>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Fetch models from all configured providers</p>
-        <div class="btn-row">
-          <button class="btn btn-primary" onclick="refreshModels()">Refresh All</button>
-        </div>
-      </div>
-    </div>
-  `;
+  var s = await api("GET", "/api/status");
+  var models = await api("GET", "/api/models");
+  var catalog = models.catalog || [];
+  var providers = await api("GET", "/api/providers");
+  var configuredCount = providers.filter(function(p) { return p.hasKey; }).length;
+  var totalModels = catalog.length;
+  var perProvider = {};
+  for (var i = 0; i < catalog.length; i++) {
+    var slug = catalog[i].slug || "";
+    var pid = slug.split("/")[0];
+    perProvider[pid] = (perProvider[pid] || 0) + 1;
+  }
+  var ppKeys = Object.keys(perProvider).sort();
+  var providerBreakdown = ppKeys.map(function(p) {
+    return "<span class=\"badge\">" + p + " <strong>" + perProvider[p] + "</strong></span>";
+  }).join(" ");
+  var modelSlug = s.model || "unknown";
+  var displayModel = modelSlug;
+  if (modelSlug.indexOf("/") !== -1) {
+    displayModel = "<span class=\"text-muted\">" + modelSlug.split("/")[0] + "/</span><strong>" + modelSlug.split("/").slice(1).join("/") + "</strong>";
+  }
+  return "<h2>" + I.dashboard + " Dashboard</h2>" +
+    "<div class=\"status-row\">" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">Active Profile</div><div class=\"stat-value\">" + s.profile + "</div></div>" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">Active Model</div><div class=\"stat-value\" style=\"font-size:.75rem\">" + displayModel + "</div><div class=\"stat-sub\">via " + s.provider + "</div></div>" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">Gateway</div><div class=\"stat-value\">:" + s.gatewayPort + " / :" + s.adminPort + "</div><div class=\"stat-sub\">API / Admin</div></div>" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">API Keys</div><div class=\"stat-value\">" + configuredCount + " / " + providers.length + "</div><div class=\"stat-sub\">" + (providers.filter(function(p){return p.hasKey}).map(function(p){return p.id}).join(", ") || "none") + "</div></div>" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">Catalog</div><div class=\"stat-value\">" + totalModels + " models</div><div class=\"stat-sub\">" + ppKeys.length + " providers</div></div>" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">Uptime</div><div class=\"stat-value\">" + formatUptime(s.uptime) + "</div></div>" +
+    "</div>" +
+    "<div class=\"card mt-3\"><div class=\"card-header\"><h3>" + I.box + " Models by Provider</h3></div>" +
+    "<div class=\"btn-row\" style=\"margin-top:4px\">" + providerBreakdown + "</div></div>" +
+    "<h2 class=\"mt-4\">" + I.check + " Quick Actions</h2>" +
+    "<div class=\"cards\">" +
+    "<div class=\"card\"><div class=\"card-header\"><h3>" + I.refresh + " Refresh Models</h3></div><p class=\"text-muted mb-3\">Fetch models from all configured providers and rebuild catalog</p><button class=\"btn btn-primary\" onclick=\"refreshModels()\">" + I.refresh + " Refresh All</button></div>" +
+    "<div class=\"card\"><div class=\"card-header\"><h3>" + I.profile + " Switch Profile</h3></div><p class=\"text-muted mb-3\">Current: <strong>" + s.profile + "</strong></p><button class=\"btn btn-primary\" onclick=\"switchProfile('" + (s.profile === "default" ? "omnicodex" : "default") + "')\">Switch to " + (s.profile === "default" ? "OmniCodex" : "Default") + "</button></div>" +
+        "<div class=\"card\"><div class=\"card-header\"><h3>" + I.refresh + " Restart Gateway</h3></div><p class=\"text-muted mb-3\">Restart the OmniCodex Gateway process. Admin UI reconnects automatically.</p><button class=\"btn btn-danger\" onclick=\"restartGateway()\">" + I.refresh + " Restart Now</button><div id=\"restart-status\" class=\"mt-3 text-muted\"></div></div>" +
+"</div>";
+}function renderProviders() {
+  var providers = await api("GET", "/api/providers");
+  return '<h2>' + I.providers + ' Providers & Keys</h2>' +
+    '<div class="toolbar"><button class="btn btn-primary" onclick="showAddProvider()" id="btn-add-provider">' + I.plus + ' Add Provider</button></div>' +
+    '<div class="cards">' + providers.map(function(p) {
+      return '<div class="card" id="provider-' + p.id + '">' +
+        '<div class="card-header"><h3>' + I.database + ' ' + p.name + '</h3><span class="status ' + (p.hasKey ? 'online' : 'offline') + '"><span class="status-dot"></span> ' + (p.hasKey ? 'Configured' : 'No key') + '</span></div>' +
+        '<p class="text-muted">' + p.website + ' · ' + p.baseURL + '</p>' +
+        (p.hasKey ? '<p class="text-muted mt-2">Key: <code class="mono">' + p.keyPreview + '</code></p>' : '') +
+        '<div class="mt-3"><label class="label">API Key</label><div class="input-row"><input type="password" id="key-' + p.id + '" placeholder="' + p.authHeader + ' ..."/></div></div>' +
+        '<div class="btn-row mt-3">' +
+        '<button class="btn btn-primary btn-sm" onclick="saveKey(\'' + p.id + '\')">' + I.lock + ' Save</button>' +
+        (p.hasKey ? '<button class="btn btn-ghost btn-sm" onclick="testKey(\'' + p.id + '\')">' + I.test + ' Test</button>' : '') +
+        (p.hasKey ? '<button class="btn btn-danger btn-sm" onclick="deleteKey(\'' + p.id + '\')">' + I.trash + ' Delete</button>' : '') +
+        '</div><div id="test-result-' + p.id + '" class="mt-3 text-muted"></div></div>';
+    }).join("") + '</div>' +
+    '<div id="add-provider-modal" class="card mt-4 hidden">' +
+    '<h3 class="mb-3">' + I.plus + ' Add Custom Provider</h3>' +
+    '<div class="input-row mb-2"><div><label class="label">Provider ID (slug)</label><input type="text" id="new-prov-id" placeholder="my-provider"/></div><div><label class="label">Display Name</label><input type="text" id="new-prov-name" placeholder="My Provider"/></div></div>' +
+    '<div class="mb-2"><label class="label">Base URL</label><input type="text" id="new-prov-url" placeholder="https://api.example.com/v1"/></div>' +
+    '<div class="mb-2"><label class="label">Auth Header Type</label><input type="text" id="new-prov-auth" value="Bearer"/></div>' +
+    '<div class="btn-row"><button class="btn btn-primary btn-sm" onclick="addCustomProvider()">' + I.check + ' Add</button><button class="btn btn-ghost btn-sm" onclick="hideAddProvider()">Cancel</button></div>' +
+    '</div>' +
+    '<div id="snap-import" class="card mt-4"><h3 class="mb-3">' + I.globe + ' Import from Open Registry</h3>' +
+    '<p class="text-muted mb-3">Search providers by name or ID. Already added providers are grayed out and disabled.</p>' +
+    '<div class="search-bar mb-3"><input type="search" id="snap-search" placeholder="Search by name or ID..." oninput="filterSnapProviders()"/>' + I.search + '</div>' +
+    '<div id="snap-actions" class="btn-row mb-3 hidden">' +
+    '<button class="btn btn-primary btn-sm" onclick="importSnapshotProviders()">' + I.plus + ' Import Selected</button>' +
+    '<button class="btn btn-ghost btn-sm" onclick="selectAllSnap()">Select All</button>' +
+    '<button class="btn btn-ghost btn-sm" onclick="deselectAllSnap()">Deselect All</button>' +
+    '<span id="snap-selected-count" class="badge">0 selected</span></div>' +
+    '<div class="model-list-compact" id="snap-list" style="max-height:300px"></div>' +
+    '<div id="snap-result" class="mt-3 text-muted"></div></div>';
 }
 
-// ─── Providers ───────────────────────────────────────────────────
-async function renderProviders() {
-  const providers = await api("GET", "/api/providers");
-  return `
-    <h2>🔑 Providers & API Keys</h2>
-    <div class="cards">
-      ${providers.map(p => `
-        <div class="card" id="provider-${p.id}">
-          <div class="card-header">
-            <h3><span class="icon">${p.icon}</span> ${p.name}</h3>
-            <span class="status ${p.hasKey ? 'online' : 'offline'}">
-              <span class="status-check"></span> ${p.hasKey ? 'Configured' : 'No key'}
-            </span>
-          </div>
-          <p style="color:var(--muted);font-size:12px">${p.website}</p>
-          ${p.hasKey ? `<p style="color:var(--muted);font-size:12px;margin-top:4px">Key: ${p.keyPreview}</p>` : ''}
-          <div class="input-group" style="margin-top:12px">
-            <label>API Key</label>
-            <input type="password" id="key-${p.id}" placeholder="${p.authHeader} ..." />
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-primary btn-sm" onclick="saveKey('${p.id}')">💾 Save</button>
-            ${p.hasKey ? `<button class="btn btn-secondary btn-sm" onclick="testKey('${p.id}')">🔍 Test</button>` : ''}
-            ${p.hasKey ? `<button class="btn btn-danger btn-sm" onclick="deleteKey('${p.id}')">🗑 Delete</button>` : ''}
-          </div>
-          <div id="test-result-${p.id}" style="margin-top:8px;font-size:12px"></div>
-        </div>
-      `).join("")}
-    </div>
-  `;
+function showAddProvider() { document.getElementById("add-provider-modal").classList.remove("hidden"); }
+function hideAddProvider() { document.getElementById("add-provider-modal").classList.add("hidden"); }
+
+async function saveKey(pid) {
+  var k = document.getElementById("key-" + pid);
+  if (!k || !k.value.trim()) return toast("Enter an API key", "error");
+  await api("POST", "/api/providers/" + pid + "/key", { key: k.value.trim() });
+  toast(pid + " key saved"); renderPage();
 }
 
-function renderProviderEvents() {
-  // Events handled via inline onclick
+async function deleteKey(pid) {
+  await api("DELETE", "/api/providers/" + pid + "/key");
+  toast(pid + " key removed"); renderPage();
 }
 
-async function saveKey(providerId) {
-  const key = document.getElementById(`key-${providerId}`).value.trim();
-  if (!key) return toast("Please enter an API key", "error");
-  await api("POST", `/api/providers/${providerId}/key`, { key });
-  toast(`${providerId} key saved`);
-  renderPage();
+async function testKey(pid) {
+  var el = document.getElementById("test-result-" + pid);
+  el.textContent = "Testing..."; el.style.color = "";
+  var r = await api("POST", "/api/providers/" + pid + "/test");
+  el.textContent = r.ok ? "OK — " + r.modelCount + " models" : "Error: " + r.error;
+  el.style.color = r.ok ? "var(--green)" : "var(--red)";
 }
 
-async function deleteKey(providerId) {
-  await api("DELETE", `/api/providers/${providerId}/key`);
-  toast(`${providerId} key removed`);
-  renderPage();
+async function addCustomProvider() {
+  var id = document.getElementById("new-prov-id").value.trim();
+  var name = document.getElementById("new-prov-name").value.trim();
+  var url = document.getElementById("new-prov-url").value.trim();
+  var auth = document.getElementById("new-prov-auth").value.trim() || "Bearer";
+  if (!id || !name || !url) return toast("Fill all fields", "error");
+  await api("POST", "/api/providers/custom", { id: id, name: name, baseURL: url, authHeader: auth, website: url });
+  toast("Provider added"); renderPage();
 }
 
-async function testKey(providerId) {
-  const resultEl = document.getElementById(`test-result-${providerId}`);
-  resultEl.textContent = "Testing...";
-  const res = await api("POST", `/api/providers/${providerId}/test`);
-  if (res.ok) {
-    resultEl.innerHTML = `<span style="color:var(--green)">✓ OK — ${res.modelCount} models available</span>`;
+var snapProvidersCache = null;
+async function loadSnapProviders() {
+  if (snapProvidersCache) return snapProvidersCache;
+  snapProvidersCache = await api("GET", "/api/snapshot-providers");
+  return snapProvidersCache;
+}
+
+async function filterSnapProviders() {
+  var q = (document.getElementById("snap-search") || {}).value || "";
+  q = q.toLowerCase();
+  var providers = await loadSnapProviders();
+  var list = document.getElementById("snap-list");
+  var filtered = providers.filter(function(p) { return p.id.toLowerCase().indexOf(q) !== -1 || p.name.toLowerCase().indexOf(q) !== -1; });
+  var existingIds = {};
+  try {
+    var curProviders = await api("GET", "/api/providers");
+    for (var i = 0; i < curProviders.length; i++) existingIds[curProviders[i].id] = true;
+  } catch (e) {}
+  list.innerHTML = filtered.slice(0, 80).map(function(p) {
+    var already = existingIds[p.id];
+    return '<label' + (already ? ' title="Already added"' : '') + '><input type="checkbox" class="snap-import-cb" value="' + p.id + '" ' + (already ? 'disabled' : '') + ' onchange="updateSnapCount()"/> ' + p.name + ' <span class="text-muted">(' + p.id + ')</span> \u2014 ' + p.protocol + (already ? ' <span style="color:var(--green)">\u2713 added</span>' : '') + '</label>';
+  }).join("");
+  if (!filtered.length) list.innerHTML = '<p class="text-muted">No match</p>';
+  document.getElementById("snap-actions").classList.remove("hidden");
+  updateSnapCount();
+}
+function updateSnapCount() {
+  var cbs = document.querySelectorAll(".snap-import-cb:checked:not(:disabled)");
+  document.getElementById("snap-selected-count").textContent = cbs.length + " selected";
+}
+function selectAllSnap() {
+  var cbs = document.querySelectorAll(".snap-import-cb:not(:disabled)");
+  for (var i = 0; i < cbs.length; i++) cbs[i].checked = true;
+  updateSnapCount();
+}
+function deselectAllSnap() {
+  var cbs = document.querySelectorAll(".snap-import-cb");
+  for (var i = 0; i < cbs.length; i++) cbs[i].checked = false;
+  updateSnapCount();
+}
+async function importSnapshotProviders() {
+  var cbs = document.querySelectorAll(".snap-import-cb:checked:not(:disabled)");
+  var ids = [];
+  for (var i = 0; i < cbs.length; i++) ids.push(cbs[i].value);
+  if (!ids.length) return toast("No providers selected", "error");
+  var r = await api("POST", "/api/providers/import-snapshot", { ids: ids });
+  if (r.ok) {
+    toast("Imported " + r.added.length + " provider(s)");
+    document.getElementById("snap-result").innerHTML = '<span style="color:var(--green)">' + I.check + ' Added: ' + r.added.join(", ") + '</span>';
+    setTimeout(function() { renderPage(); }, 600);
   } else {
-    resultEl.innerHTML = `<span style="color:var(--red)">✗ ${res.error}</span>`;
+    toast(r.error || "Import failed", "error");
   }
 }
 
-// ─── Models ──────────────────────────────────────────────────────
 async function renderModels() {
-  const data = await api("GET", "/api/models");
-  const catalog = data.catalog || [];
-  const selections = data.selections || {};
-
-  // Group by provider
-  const byProvider = {};
-  for (const m of catalog) {
-    const parts = m.slug.split("/");
-    const providerId = parts[0];
-    if (!byProvider[providerId]) byProvider[providerId] = [];
-    byProvider[providerId].push({ slug: m.slug, id: parts.slice(1).join("/"), display: m.display_name });
-  }
-
-  const providers = await api("GET", "/api/providers");
-
-  return `
-    <h2>🧠 Model Selection</h2>
-    <div class="btn-row" style="margin-bottom:20px">
-      <button class="btn btn-primary" onclick="refreshModels()">🔄 Refresh from providers</button>
-      <button class="btn btn-secondary" onclick="saveSelections()">💾 Save selections</button>
-    </div>
-    <p class="refresh-indicator" id="refresh-indicator"></p>
-    <div class="cards">
-      ${providers.map(p => {
-        const models = byProvider[p.id] || [];
-        const sel = selections[p.id] || [];
-        return `
-          <div class="card">
-            <div class="card-header">
-              <h3><span class="icon">${p.icon}</span> ${p.name}</h3>
-              <span class="status ${p.hasKey ? 'online' : 'offline'}">
-                <span class="status-check"></span> ${models.length} models
-              </span>
-            </div>
-            <div class="model-select">
-              ${models.length === 0 ? '<p style="color:var(--muted);font-size:12px">No models loaded. Refresh first.</p>' :
-                models.map(m => `
-                  <label>
-                    <input type="checkbox" value="${m.id}" class="model-cb-${p.id}" ${sel.length === 0 || sel.includes(m.id) ? 'checked' : ''}>
-                    ${m.display || m.id}
-                  </label>
-                `).join("")
-              }
-            </div>
-          </div>
-        `;
-      }).join("")}
-    </div>
-  `;
+  var data = await api("GET", "/api/models");
+  var catalog = data.catalog || [];
+  return '<h2>' + I.models + ' Models</h2>' +
+    '<div class="toolbar">' +
+    '<button class="btn btn-primary" onclick="refreshModels()">' + I.refresh + ' Refresh</button>' +
+    '<button class="btn btn-green" onclick="saveSelections()">' + I.check + ' Save Selections</button>' +
+    '<span id="model-count" class="badge">' + catalog.length + ' models</span>' +
+    '</div>' +
+    '<div class="search-bar"><input type="search" id="model-search" placeholder="Search models or providers..." oninput="filterModels()"/>' + I.search + '</div>' +
+    '<div class="toolbar" style="margin-bottom:4px"><span class="text-muted" style="font-size:.6rem">Filter by provider:</span></div>' +
+    '<div id="provider-chips" class="btn-row" style="margin-bottom:14px"></div>' +
+    '<div id="model-grid"></div>';
 }
 
-function renderModelEvents() {}
+async function initModelPage() {
+  var data = await api("GET", "/api/models");
+  allModels = (data.catalog || []).map(function(m) {
+    var parts = (m.slug || "").split("/");
+    return { slug: m.slug, display: m.display_name || parts.slice(1).join("/"), provider: parts[0] };
+  });
+  allSelections = data.selections || {};
+  // Build provider chips
+  var providers = {};
+  for (var i = 0; i < allModels.length; i++) { providers[allModels[i].provider] = true; }
+  var chips = document.getElementById("provider-chips");
+  chips.innerHTML = Object.keys(providers).sort().map(function(p) {
+    return '<button class="badge" data-prov="' + p + '" onclick="filterByProvider(\'' + p + '\')" style="cursor:pointer">' + p + '</button>' +
+      '<button class="badge active" data-prov="' + p + '" onclick="toggleProviderAll(\'' + p + '\')" style="cursor:pointer;margin-left:2px" title="Toggle all">&#10003;</button>';
+  }).join(" ");
+  filterModels();
+}
+
+function filterModels(providerFilter) {
+  var q = (document.getElementById("model-search") || {}).value || "";
+  q = q.toLowerCase();
+  var grid = document.getElementById("model-grid");
+  var filtered = allModels;
+  if (q) filtered = filtered.filter(function(m) { return m.slug.toLowerCase().indexOf(q) !== -1 || m.provider.toLowerCase().indexOf(q) !== -1; });
+  if (providerFilter) filtered = filtered.filter(function(m) { return m.provider === providerFilter; });
+  var sel = allSelections;
+  var byProvider = {};
+  for (var i = 0; i < filtered.length; i++) {
+    var m = filtered[i];
+    if (!byProvider[m.provider]) byProvider[m.provider] = [];
+    byProvider[m.provider].push(m);
+  }
+  var html = '';
+  var providersSorted = Object.keys(byProvider).sort();
+  for (var pi = 0; pi < providersSorted.length; pi++) {
+    var prov = providersSorted[pi];
+    var models = byProvider[prov];
+    var allSel = sel[prov] == null || sel[prov].length === 0;
+    var checkedCount = 0;
+    var rows = '';
+    for (var mi = 0; mi < models.length; mi++) {
+      var mk = models[mi];
+      var mid = mk.slug.split("/").slice(1).join("/");
+      var checked = allSel || sel[prov].indexOf(mid) !== -1;
+      if (checked) checkedCount++;
+      rows += '<label><input type="checkbox" class="model-cb" data-provider="' + prov + '" data-model="' + mid + '" ' + (checked ? "checked" : "") + '/> <span class="model-name" style="font-size:.65rem">' + mk.display + '</span></label>';
+    }
+    html += '<div class="card mt-3"><div class="flex-between mb-3"><h3 style="margin:0;font-size:.75rem">' + prov + ' <span class="text-muted">(' + checkedCount + '/' + models.length + ' selected)</span></h3>' +
+      '<div class="btn-row">' +
+      '<button class="btn btn-ghost btn-sm" onclick="selectAllProvider(\'' + prov + '\')">' + I.box + ' All</button>' +
+      '<button class="btn btn-ghost btn-sm" onclick="deselectAllProvider(\'' + prov + '\')">' + I.trash + ' None</button>' +
+      '</div></div>' +
+      '<div class="model-list-compact" style="max-height:none">' + rows + '</div></div>';
+  }
+  grid.innerHTML = html || '<div class="card"><p class="text-muted">No models found</p></div>';
+  document.getElementById("model-count").textContent = filtered.length + " / " + allModels.length + " models";
+  var chips = document.querySelectorAll("#provider-chips .badge");
+  for (var ci = 0; ci < chips.length; ci++) {
+    var p = chips[ci].dataset.prov;
+    if (!p) continue;
+    if (p === providerFilter) chips[ci].classList.add("active");
+    else if (chips[ci].textContent.indexOf("All") === -1 && chips[ci].textContent.indexOf("None") === -1) chips[ci].classList.remove("active");
+  }
+}
+
+function filterByProvider(prov) {
+  document.getElementById("model-search").value = "";
+  filterModels(prov);
+}
+function selectAllProvider(prov) {
+  var cbs = document.querySelectorAll(".model-cb[data-provider='" + prov + "']");
+  for (var i = 0; i < cbs.length; i++) cbs[i].checked = true;
+  updateProviderCount(prov);
+}
+function deselectAllProvider(prov) {
+  var cbs = document.querySelectorAll(".model-cb[data-provider='" + prov + "']");
+  for (var i = 0; i < cbs.length; i++) cbs[i].checked = false;
+  updateProviderCount(prov);
+}
+function toggleProviderAll(prov) {
+  var cbs = document.querySelectorAll(".model-cb[data-provider='" + prov + "']");
+  if (!cbs.length) return;
+  var allChecked = true;
+  for (var i = 0; i < cbs.length; i++) { if (!cbs[i].checked) { allChecked = false; break; } }
+  for (var i = 0; i < cbs.length; i++) { cbs[i].checked = !allChecked; }
+  updateProviderCount(prov);
+}
+function updateProviderCount(prov) {
+  var cbs = document.querySelectorAll(".model-cb[data-provider='" + prov + "']");
+  var checked = 0;
+  for (var i = 0; i < cbs.length; i++) { if (cbs[i].checked) checked++; }
+  var h3s = document.querySelectorAll("#model-grid h3");
+  for (var i = 0; i < h3s.length; i++) {
+    if (h3s[i].textContent.indexOf(prov) === 0) {
+      h3s[i].innerHTML = prov + ' <span class="text-muted">(' + checked + '/' + cbs.length + ' selected)</span>';
+    }
+  }
+}
 
 async function refreshModels() {
-  const indicator = document.getElementById("refresh-indicator");
-  if (indicator) indicator.textContent = "Fetching models from all providers...";
-  const res = await api("POST", "/api/models/refresh");
-  if (res.ok) {
-    toast(`Catalog refreshed — ${res.modelCount} models`);
-    renderPage();
-  } else {
-    toast("Refresh failed", "error");
-  }
+  toast("Fetching models...");
+  var r = await api("POST", "/api/models/refresh");
+  if (r.ok) { toast("Catalog updated — " + r.modelCount + " models"); renderPage(); }
+  else toast("Refresh failed", "error");
 }
 
 async function saveSelections() {
-  const selections = {};
-  document.querySelectorAll("[class^='model-cb-']").forEach(cb => {
-    const providerId = cb.className.replace("model-cb-", "");
-    if (!selections[providerId]) selections[providerId] = [];
-    if (cb.checked) selections[providerId].push(cb.value);
-  });
-  await api("POST", "/api/models/selections", selections);
-  await refreshModels();
-  toast("Selections saved & catalog updated");
+  var sel = {};
+  var cbs = document.querySelectorAll(".model-cb");
+  for (var i = 0; i < cbs.length; i++) {
+    var cb = cbs[i];
+    if (!sel[cb.dataset.provider]) sel[cb.dataset.provider] = [];
+    if (cb.checked) sel[cb.dataset.provider].push(cb.dataset.model);
+  }
+  await api("POST", "/api/models/selections", sel);
+  toast("Selections saved"); renderPage();
 }
 
-// ─── Profile ─────────────────────────────────────────────────────
+async function renderPlayground() {
+  var data = await api("GET", "/api/models");
+  var allSlugs = (data.catalog || []).map(function(m) { return m.slug || ""; });
+  return '<h2>' + I.playground + ' Playground</h2>' +
+    '<div class="cards"><div class="card"><div class="card-header"><h3>' + I.send + ' Test Prompt</h3></div>' +
+    '<div class="mb-2"><label class="label">Model</label><input type="text" id="pg-model" list="pg-model-list" placeholder="openai/gpt-5.5"/><datalist id="pg-model-list">' + allSlugs.map(function(m) { return '<option value="' + m + '"/>'; }).join("") + '</datalist></div>' +
+    '<div class="mb-2"><label class="label">System Prompt</label><textarea id="pg-system" rows="2" placeholder="You are a helpful assistant."></textarea></div>' +
+    '<div class="mb-2"><label class="label">User Message</label><textarea id="pg-prompt" rows="3" placeholder="Hello! What can you do?"></textarea></div>' +
+    '<div class="btn-row mb-3"><button class="btn btn-primary" onclick="sendPlayground()">' + I.send + ' Send</button><button class="btn btn-ghost btn-sm" onclick="clearPlayground()">Clear</button></div>' +
+    '<div id="pg-result" class="chat-log" style="min-height:120px">Ready. Select a model and enter a prompt.</div></div></div>';
+}
+
+async function sendPlayground() {
+  var model = document.getElementById("pg-model").value.trim();
+  var system = document.getElementById("pg-system").value.trim();
+  var prompt = document.getElementById("pg-prompt").value.trim();
+  var resultEl = document.getElementById("pg-result");
+  if (!model || !prompt) { resultEl.textContent = "Model and prompt required."; return; }
+  resultEl.innerHTML = '<div class="chat-msg user"><strong>You:</strong> ' + escapeHtml(prompt) + '</div><div class="chat-msg system">Sending to ' + model + '...</div>';
+  try {
+    var r = await api("POST", "/api/playground/send", { model: model, system: system, prompt: prompt });
+    if (r.ok) {
+      resultEl.innerHTML += '<div class="chat-msg assistant"><strong>' + model + ':</strong> ' + escapeHtml(r.text) + '</div>';
+    } else {
+      resultEl.innerHTML += '<div class="chat-msg error"><strong>Error:</strong> ' + escapeHtml(r.error) + '</div>';
+    }
+  } catch (e) {
+    resultEl.innerHTML += '<div class="chat-msg error"><strong>Error:</strong> ' + e.message + '</div>';
+  }
+  resultEl.scrollTop = resultEl.scrollHeight;
+}
+
+function clearPlayground() { document.getElementById("pg-result").innerHTML = "Ready."; }
+
+function escapeHtml(s) { return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
 async function renderProfile() {
-  const profile = await api("GET", "/api/profile");
-  const downloadName = document.getElementById("profile-download-name")?.value || "omnicodex";
-  return `
-    <h2>🔄 Codex Profile</h2>
-    <div class="status-row">
-      <div class="stat-card">
-        <div class="stat-label">Active Profile</div>
-        <div class="stat-value">${profile.profile}</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Current Model</div>
-        <div class="stat-value">${profile.model}</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Provider</div>
-        <div class="stat-value">${profile.provider}</div>
-      </div>
-    </div>
-    <div class="cards">
-      <div class="card">
-        <div class="card-header"><h3>📥 Download Profile</h3></div>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">
-          Download your current config.toml as a shareable profile file.<br>
-          Others can use it with <code>codex --profile filename</code>
-        </p>
-        <div class="input-group">
-          <label>Profile name (used as filename)</label>
-          <input type="text" id="profile-download-name" value="omnicodex" placeholder="myproxy" />
-        </div>
-        <div class="btn-row">
-          <button class="btn btn-primary" onclick="downloadProfile()">📥 Download .config.toml</button>
-        </div>
-        <div id="download-result" style="margin-top:8px;font-size:12px"></div>
-      </div>
-      <div class="card">
-        <div class="card-header"><h3>Switch to OmniCodex</h3></div>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Uses all configured providers through the gateway</p>
-        <button class="btn btn-primary" onclick="switchProfile('omnicodex')">Switch to OmniCodex</button>
-        <div id="switch-result-omnicodex" style="margin-top:8px;font-size:12px"></div>
-      </div>
-      <div class="card">
-        <div class="card-header"><h3>Switch to Default</h3></div>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Restore Codex default OpenAI profile</p>
-        <button class="btn btn-secondary" onclick="switchProfile('default')">Restore Default</button>
-        <div id="switch-result-default" style="margin-top:8px;font-size:12px"></div>
-      </div>
-    </div>
-  `;
+  var p = await api("GET", "/api/profile");
+  return '<h2>' + I.profile + ' Codex Profile</h2>' +
+    '<div class="status-row">' +
+    '<div class="stat-card"><div class="stat-label">Active Profile</div><div class="stat-value">' + p.profile + '</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Model</div><div class="stat-value" style="font-size:.75rem">' + p.model + '</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Provider</div><div class="stat-value">' + p.provider + '</div></div>' +
+    '</div>' +
+    '<div class="cards">' +
+    '<div class="card"><div class="card-header"><h3>' + I.download + ' Download Profile</h3></div><p class="text-muted mb-3">Export current config.toml as a shareable profile.</p><div class="input-row mb-3"><div><label class="label">Name</label><input type="text" id="pf-name" value="omnicodex"/></div></div><button class="btn btn-primary btn-sm" onclick="downloadProfile()">' + I.download + ' Download</button><div id="pf-dl-result" class="mt-3 text-muted"></div></div>' +
+    '<div class="card"><div class="card-header"><h3>Switch to OmniCodex</h3></div><button class="btn btn-primary btn-sm" onclick="switchProfile(\'omnicodex\')">Switch</button><div id="sw-omni" class="mt-3 text-muted"></div></div>' +
+    '<div class="card"><div class="card-header"><h3>Restore Default</h3></div><button class="btn btn-ghost btn-sm" onclick="switchProfile(\'default\')">Restore</button><div id="sw-def" class="mt-3 text-muted"></div></div>' +
+    '</div>';
+}
+
+function renderLogs() {
+  return '<h2>' + I.logs + ' Live Logs</h2><div class="chat-log" id="log-view" style="max-height:500px">Connecting...</div>' +
+    '<scr' + 'ipt>(function(){var v=document.getElementById("log-view");var s=new EventSource(API+"/api/logs/stream");s.onmessage=function(e){try{var d=JSON.parse(e.data);v.textContent+=d+"\\n";v.scrollTop=v.scrollHeight}catch(e2){}};s.onerror=function(){v.textContent+="Disconnected. Refresh to reconnect.\\n"}})()<\/scr' + 'ipt>';
+}
+
+async function switchProfile(target) {
+  var r = await api("POST", "/api/profile/switch", { target: target });
+  if (r.ok) { toast("Switched to " + target); setTimeout(renderPage, 800); }
+  else toast(r.error, "error");
 }
 
 async function downloadProfile() {
-  const name = document.getElementById("profile-download-name")?.value?.trim() || "omnicodex";
-  const resultEl = document.getElementById("download-result");
+  var name = (document.getElementById("pf-name") || {}).value || "omnicodex";
+  name = name.trim() || "omnicodex";
+  var el = document.getElementById("pf-dl-result");
   try {
-    const res = await fetch(`${API}/api/profile/download`, {
-      headers: { "x-profile-name": name }
-    });
-    if (!res.ok) throw new Error("Download failed");
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${name}.config.toml`;
-    a.click();
+    var res = await fetch(API + "/api/profile/download", { headers: { "x-profile-name": name } });
+    if (!res.ok) throw new Error("Failed");
+    var blob = await res.blob();
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a"); a.href = url; a.download = name + ".config.toml"; a.click();
     URL.revokeObjectURL(url);
-    if (resultEl) resultEl.innerHTML = `<span style="color:var(--green)">✓ Downloaded as ${name}.config.toml</span>`;
-    toast(`Downloaded ${name}.config.toml`);
-  } catch (err) {
-    if (resultEl) resultEl.innerHTML = `<span style="color:var(--red)">✗ ${err.message}</span>`;
-  }
-}
-
-function renderProfileEvents() {}
-
-async function switchProfile(target) {
-  const resultEl = document.getElementById(`switch-result-${target}`);
-  if (resultEl) resultEl.textContent = "Switching...";
-  try {
-    const res = await api("POST", "/api/profile/switch", { target });
-    if (res.ok) {
-      if (resultEl) resultEl.innerHTML = '<span style="color:var(--green)">✓ Profile switched</span>';
-      toast(`Profile switched to ${target}`);
-      setTimeout(renderPage, 1000);
-    } else {
-      if (resultEl) resultEl.innerHTML = `<span style="color:var(--red)">✗ ${res.error}</span>`;
-    }
-  } catch (err) {
-    if (resultEl) resultEl.textContent = `Error: ${err.message}`;
-  }
-}
-
-// ─── Logs ────────────────────────────────────────────────────────
-function renderLogs() {
-  return `
-    <h2>📋 Live Logs</h2>
-    <div class="log-view" id="log-view"><div class="log-line">Connecting to log stream...</div></div>
-    <script>(()=>{const v=document.getElementById("log-view");const s=new EventSource(API+"/api/logs/stream");s.onmessage=e=>{try{const d=JSON.parse(e.data);const l=document.createElement("div");l.className="log-line";l.textContent=d;v.appendChild(l);v.scrollTop=v.scrollHeight}catch{}};s.onerror=()=>{setTimeout(()=>v.innerHTML='<div class="log-line error">Log stream disconnected. Refresh to reconnect.</div>',3000)}})()</scr`+`ipt>
-  `;
+    if (el) el.innerHTML = '<span style="color:var(--green)">Downloaded</span>';
+  } catch (e) { if (el) el.innerHTML = '<span style="color:var(--red)">Error</span>'; }
 }
 
 function formatUptime(s) {
-  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
-  return `${h}h ${m}m ${sec}s`;
+  var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+  return h + "h " + m + "m";
 }
 
 renderPage();
+
 </script>
 </body>
 </html>
