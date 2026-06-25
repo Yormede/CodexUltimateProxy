@@ -185,40 +185,384 @@ async function renderPage() {
 async function renderDashboard() {
   var s = await api("GET", "/api/status");
   var p = s.profile || {};
-  var pn = p.profile || "unknown";
-  var ms = p.model || "unknown";
-  var pv = p.provider || "unknown";
-  var dm = ms.indexOf("/") !== -1 ? '<span class="text-muted">' + ms.split("/")[0] + '/</span><strong>' + ms.split("/").slice(1).join("/") + '</strong>' : ms;
   var models = await api("GET", "/api/models");
   var catalog = models.catalog || [];
   var providers = await api("GET", "/api/providers");
-  var cfg = providers.filter(function(x){return x.hasKey}).length;
-  var tot = catalog.length;
-  var pp = {};
+  var configuredCount = providers.filter(function(p) { return p.hasKey; }).length;
+  var totalModels = catalog.length;
+  var perProvider = {};
   for (var i = 0; i < catalog.length; i++) {
-    var pid = (catalog[i].slug || "").split("/")[0];
-    pp[pid] = (pp[pid] || 0) + 1;
+    var slug = catalog[i].slug || "";
+    var pid = slug.split("/")[0];
+    perProvider[pid] = (perProvider[pid] || 0) + 1;
   }
-  var pk = Object.keys(pp).sort();
-  var bd = pk.map(function(x){return '<span class="badge">' + x + ' <strong>' + pp[x] + '</strong></span>'}).join(" ");
-  var ot = pn === "default" ? "omnicodex" : "default";
-  var ol = pn === "default" ? "OmniCodex" : "Default";
-
-  return '<h2>' + I.dashboard + ' Dashboard</h2>' +
-    '<div class="status-row">' +
-    '<div class="stat-card"><div class="stat-label">Active Profile</div><div class="stat-value">' + pn + '</div></div>' +
-    '<div class="stat-card"><div class="stat-label">Active Model</div><div class="stat-value" style="font-size:.75rem">' + dm + '</div><div class="stat-sub">via ' + pv + '</div></div>' +
-    '<div class="stat-card"><div class="stat-label">Gateway</div><div class="stat-value">:' + s.gatewayPort + ' / :' + s.adminPort + '</div><div class="stat-sub">API / Admin</div></div>' +
-    '<div class="stat-card"><div class="stat-label">API Keys</div><div class="stat-value">' + cfg + ' / ' + providers.length + '</div><div class="stat-sub">' + (providers.filter(function(x){return x.hasKey}).map(function(x){return x.id}).join(", ") || "none") + '</div></div>' +
-    '<div class="stat-card"><div class="stat-label">Catalog</div><div class="stat-value">' + tot + ' models</div><div class="stat-sub">' + pk.length + ' providers</div></div>' +
-    '<div class="stat-card"><div class="stat-label">Uptime</div><div class="stat-value">' + formatUptime(s.uptime) + '</div></div>' +
+  var ppKeys = Object.keys(perProvider).sort();
+  var providerBreakdown = ppKeys.map(function(p) {
+    return "<span class=\"badge\">" + p + " <strong>" + perProvider[p] + "</strong></span>";
+  }).join(" ");
+  var modelSlug = s.model || "unknown";
+  var displayModel = modelSlug;
+  if (modelSlug.indexOf("/") !== -1) {
+    displayModel = "<span class=\"text-muted\">" + modelSlug.split("/")[0] + "/</span><strong>" + modelSlug.split("/").slice(1).join("/") + "</strong>";
+  }
+  return "<h2>" + I.dashboard + " Dashboard</h2>" +
+    "<div class=\"status-row\">" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">Active Profile</div><div class=\"stat-value\">" + s.profile + "</div></div>" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">Active Model</div><div class=\"stat-value\" style=\"font-size:.75rem\">" + displayModel + "</div><div class=\"stat-sub\">via " + s.provider + "</div></div>" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">Gateway</div><div class=\"stat-value\">:" + s.gatewayPort + " / :" + s.adminPort + "</div><div class=\"stat-sub\">API / Admin</div></div>" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">API Keys</div><div class=\"stat-value\">" + configuredCount + " / " + providers.length + "</div><div class=\"stat-sub\">" + (providers.filter(function(p){return p.hasKey}).map(function(p){return p.id}).join(", ") || "none") + "</div></div>" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">Catalog</div><div class=\"stat-value\">" + totalModels + " models</div><div class=\"stat-sub\">" + ppKeys.length + " providers</div></div>" +
+    "<div class=\"stat-card\"><div class=\"stat-label\">Uptime</div><div class=\"stat-value\">" + formatUptime(s.uptime) + "</div></div>" +
+    "</div>" +
+    "<div class=\"card mt-3\"><div class=\"card-header\"><h3>" + I.box + " Models by Provider</h3></div>" +
+    "<div class=\"btn-row\" style=\"margin-top:4px\">" + providerBreakdown + "</div></div>" +
+    "<h2 class=\"mt-4\">" + I.check + " Quick Actions</h2>" +
+    "<div class=\"cards\">" +
+    "<div class=\"card\"><div class=\"card-header\"><h3>" + I.refresh + " Refresh Models</h3></div><p class=\"text-muted mb-3\">Fetch models from all configured providers and rebuild catalog</p><button class=\"btn btn-primary\" onclick=\"refreshModels()\">" + I.refresh + " Refresh All</button></div>" +
+    "<div class=\"card\"><div class=\"card-header\"><h3>" + I.profile + " Switch Profile</h3></div><p class=\"text-muted mb-3\">Current: <strong>" + (p.profile || "unknown") + "</strong></p><button class=\"btn btn-primary\" onclick=\"switchProfile('" + (s.profile === "default" ? "omnicodex" : "default") + "')\">Switch to " + ((p.profile || "default") === "default" ? "OmniCodex" : "Default") + "</button></div>" +
+        "<div class=\"card\"><div class=\"card-header\"><h3>" + I.refresh + " Restart Gateway</h3></div><p class=\"text-muted mb-3\">Restart the OmniCodex Gateway process. Admin UI reconnects automatically.</p><button class=\"btn btn-danger\" onclick=\"restartGateway()\">" + I.refresh + " Restart Now</button><div id=\"restart-status\" class=\"mt-3 text-muted\"></div></div>" +
+"</div>";
+}
+async function renderProviders() {
+  var providers = await api("GET", "/api/providers");
+  return '<h2>' + I.providers + ' Providers & Keys</h2>' +
+    '<div class="toolbar"><button class="btn btn-primary" onclick="showAddProvider()" id="btn-add-provider">' + I.plus + ' Add Provider</button></div>' +
+    '<div class="cards">' + providers.map(function(p) {
+      return '<div class="card" id="provider-' + p.id + '">' +
+        '<div class="card-header"><h3>' + I.database + ' ' + p.name + '</h3><span class="status ' + (p.hasKey ? 'online' : 'offline') + '"><span class="status-dot"></span> ' + (p.hasKey ? 'Configured' : 'No key') + '</span></div>' +
+        '<p class="text-muted">' + p.website + ' · ' + p.baseURL + '</p>' +
+        (p.hasKey ? '<p class="text-muted mt-2">Key: <code class="mono">' + p.keyPreview + '</code></p>' : '') +
+        '<div class="mt-3"><label class="label">API Key</label><div class="input-row"><input type="password" id="key-' + p.id + '" placeholder="' + p.authHeader + ' ..."/></div></div>' +
+        '<div class="btn-row mt-3">' +
+        '<button class="btn btn-primary btn-sm" onclick="saveKey(\'' + p.id + '\')">' + I.lock + ' Save</button>' +
+        (p.hasKey ? '<button class="btn btn-ghost btn-sm" onclick="testKey(\'' + p.id + '\')">' + I.test + ' Test</button>' : '') +
+        (p.hasKey ? '<button class="btn btn-danger btn-sm" onclick="deleteKey(\'' + p.id + '\')">' + I.trash + ' Delete</button>' : '') +
+        '</div><div id="test-result-' + p.id + '" class="mt-3 text-muted"></div></div>';
+    }).join("") + '</div>' +
+    '<div id="add-provider-modal" class="card mt-4 hidden">' +
+    '<h3 class="mb-3">' + I.plus + ' Add Custom Provider</h3>' +
+    '<div class="input-row mb-2"><div><label class="label">Provider ID (slug)</label><input type="text" id="new-prov-id" placeholder="my-provider"/></div><div><label class="label">Display Name</label><input type="text" id="new-prov-name" placeholder="My Provider"/></div></div>' +
+    '<div class="mb-2"><label class="label">Base URL</label><input type="text" id="new-prov-url" placeholder="https://api.example.com/v1"/></div>' +
+    '<div class="mb-2"><label class="label">Auth Header Type</label><input type="text" id="new-prov-auth" value="Bearer"/></div>' +
+    '<div class="btn-row"><button class="btn btn-primary btn-sm" onclick="addCustomProvider()">' + I.check + ' Add</button><button class="btn btn-ghost btn-sm" onclick="hideAddProvider()">Cancel</button></div>' +
     '</div>' +
-    '<div class="card mt-3"><div class="card-header"><h3>' + I.box + ' Models by Provider</h3></div>' +
-    '<div class="btn-row" style="margin-top:4px">' + bd + '</div></div>' +
-    '<h2 class="mt-4">' + I.check + ' Quick Actions</h2>' +
+    '<div id="snap-import" class="card mt-4"><h3 class="mb-3">' + I.globe + ' Import from Open Registry</h3>' +
+    '<p class="text-muted mb-3">Search providers by name or ID. Already added providers are grayed out and disabled.</p>' +
+    '<div class="search-bar mb-3"><input type="search" id="snap-search" placeholder="Search by name or ID..." oninput="filterSnapProviders()"/>' + I.search + '</div>' +
+    '<div id="snap-actions" class="btn-row mb-3 hidden">' +
+    '<button class="btn btn-primary btn-sm" onclick="importSnapshotProviders()">' + I.plus + ' Import Selected</button>' +
+    '<button class="btn btn-ghost btn-sm" onclick="selectAllSnap()">Select All</button>' +
+    '<button class="btn btn-ghost btn-sm" onclick="deselectAllSnap()">Deselect All</button>' +
+    '<span id="snap-selected-count" class="badge">0 selected</span></div>' +
+    '<div class="model-list-compact" id="snap-list" style="max-height:300px"></div>' +
+    '<div id="snap-result" class="mt-3 text-muted"></div></div>';
+}
+
+function showAddProvider() { document.getElementById("add-provider-modal").classList.remove("hidden"); }
+function hideAddProvider() { document.getElementById("add-provider-modal").classList.add("hidden"); }
+
+async function saveKey(pid) {
+  var k = document.getElementById("key-" + pid);
+  if (!k || !k.value.trim()) return toast("Enter an API key", "error");
+  await api("POST", "/api/providers/" + pid + "/key", { key: k.value.trim() });
+  toast(pid + " key saved"); renderPage();
+}
+
+async function deleteKey(pid) {
+  await api("DELETE", "/api/providers/" + pid + "/key");
+  toast(pid + " key removed"); renderPage();
+}
+
+async function testKey(pid) {
+  var el = document.getElementById("test-result-" + pid);
+  el.textContent = "Testing..."; el.style.color = "";
+  var r = await api("POST", "/api/providers/" + pid + "/test");
+  el.textContent = r.ok ? "OK — " + r.modelCount + " models" : "Error: " + r.error;
+  el.style.color = r.ok ? "var(--green)" : "var(--red)";
+}
+
+async function addCustomProvider() {
+  var id = document.getElementById("new-prov-id").value.trim();
+  var name = document.getElementById("new-prov-name").value.trim();
+  var url = document.getElementById("new-prov-url").value.trim();
+  var auth = document.getElementById("new-prov-auth").value.trim() || "Bearer";
+  if (!id || !name || !url) return toast("Fill all fields", "error");
+  await api("POST", "/api/providers/custom", { id: id, name: name, baseURL: url, authHeader: auth, website: url });
+  toast("Provider added"); renderPage();
+}
+
+var snapProvidersCache = null;
+async function loadSnapProviders() {
+  if (snapProvidersCache) return snapProvidersCache;
+  snapProvidersCache = await api("GET", "/api/snapshot-providers");
+  return snapProvidersCache;
+}
+
+async function filterSnapProviders() {
+  var q = (document.getElementById("snap-search") || {}).value || "";
+  q = q.toLowerCase();
+  var providers = await loadSnapProviders();
+  var list = document.getElementById("snap-list");
+  var filtered = providers.filter(function(p) { return p.id.toLowerCase().indexOf(q) !== -1 || p.name.toLowerCase().indexOf(q) !== -1; });
+  var existingIds = {};
+  try {
+    var curProviders = await api("GET", "/api/providers");
+    for (var i = 0; i < curProviders.length; i++) existingIds[curProviders[i].id] = true;
+  } catch (e) {}
+  list.innerHTML = filtered.slice(0, 80).map(function(p) {
+    var already = existingIds[p.id];
+    return '<label' + (already ? ' title="Already added"' : '') + '><input type="checkbox" class="snap-import-cb" value="' + p.id + '" ' + (already ? 'disabled' : '') + ' onchange="updateSnapCount()"/> ' + p.name + ' <span class="text-muted">(' + p.id + ')</span> \u2014 ' + p.protocol + (already ? ' <span style="color:var(--green)">\u2713 added</span>' : '') + '</label>';
+  }).join("");
+  if (!filtered.length) list.innerHTML = '<p class="text-muted">No match</p>';
+  document.getElementById("snap-actions").classList.remove("hidden");
+  updateSnapCount();
+}
+function updateSnapCount() {
+  var cbs = document.querySelectorAll(".snap-import-cb:checked:not(:disabled)");
+  document.getElementById("snap-selected-count").textContent = cbs.length + " selected";
+}
+function selectAllSnap() {
+  var cbs = document.querySelectorAll(".snap-import-cb:not(:disabled)");
+  for (var i = 0; i < cbs.length; i++) cbs[i].checked = true;
+  updateSnapCount();
+}
+function deselectAllSnap() {
+  var cbs = document.querySelectorAll(".snap-import-cb");
+  for (var i = 0; i < cbs.length; i++) cbs[i].checked = false;
+  updateSnapCount();
+}
+async function importSnapshotProviders() {
+  var cbs = document.querySelectorAll(".snap-import-cb:checked:not(:disabled)");
+  var ids = [];
+  for (var i = 0; i < cbs.length; i++) ids.push(cbs[i].value);
+  if (!ids.length) return toast("No providers selected", "error");
+  var r = await api("POST", "/api/providers/import-snapshot", { ids: ids });
+  if (r.ok) {
+    toast("Imported " + r.added.length + " provider(s)");
+    document.getElementById("snap-result").innerHTML = '<span style="color:var(--green)">' + I.check + ' Added: ' + r.added.join(", ") + '</span>';
+    setTimeout(function() { renderPage(); }, 600);
+  } else {
+    toast(r.error || "Import failed", "error");
+  }
+}
+
+async function renderModels() {
+  var data = await api("GET", "/api/models");
+  var catalog = data.catalog || [];
+  return '<h2>' + I.models + ' Models</h2>' +
+    '<div class="toolbar">' +
+    '<button class="btn btn-primary" onclick="refreshModels()">' + I.refresh + ' Refresh</button>' +
+    '<button class="btn btn-green" onclick="saveSelections()">' + I.check + ' Save Selections</button>' +
+    '<span id="model-count" class="badge">' + catalog.length + ' models</span>' +
+    '</div>' +
+    '<div class="search-bar"><input type="search" id="model-search" placeholder="Search models or providers..." oninput="filterModels()"/>' + I.search + '</div>' +
+    '<div class="toolbar" style="margin-bottom:4px"><span class="text-muted" style="font-size:.6rem">Filter by provider:</span></div>' +
+    '<div id="provider-chips" class="btn-row" style="margin-bottom:14px"></div>' +
+    '<div id="model-grid"></div>';
+}
+
+async function initModelPage() {
+  var data = await api("GET", "/api/models");
+  allModels = (data.catalog || []).map(function(m) {
+    var parts = (m.slug || "").split("/");
+    return { slug: m.slug, display: m.display_name || parts.slice(1).join("/"), provider: parts[0] };
+  });
+  allSelections = data.selections || {};
+  // Build provider chips
+  var providers = {};
+  for (var i = 0; i < allModels.length; i++) { providers[allModels[i].provider] = true; }
+  var chips = document.getElementById("provider-chips");
+  chips.innerHTML = Object.keys(providers).sort().map(function(p) {
+    return '<button class="badge" data-prov="' + p + '" onclick="filterByProvider(\'' + p + '\')" style="cursor:pointer">' + p + '</button>' +
+      '<button class="badge active" data-prov="' + p + '" onclick="toggleProviderAll(\'' + p + '\')" style="cursor:pointer;margin-left:2px" title="Toggle all">&#10003;</button>';
+  }).join(" ");
+  filterModels();
+}
+
+function filterModels(providerFilter) {
+  var q = (document.getElementById("model-search") || {}).value || "";
+  q = q.toLowerCase();
+  var grid = document.getElementById("model-grid");
+  var filtered = allModels;
+  if (q) filtered = filtered.filter(function(m) { return m.slug.toLowerCase().indexOf(q) !== -1 || m.provider.toLowerCase().indexOf(q) !== -1; });
+  if (providerFilter) filtered = filtered.filter(function(m) { return m.provider === providerFilter; });
+  var sel = allSelections;
+  var byProvider = {};
+  for (var i = 0; i < filtered.length; i++) {
+    var m = filtered[i];
+    if (!byProvider[m.provider]) byProvider[m.provider] = [];
+    byProvider[m.provider].push(m);
+  }
+  var html = '';
+  var providersSorted = Object.keys(byProvider).sort();
+  for (var pi = 0; pi < providersSorted.length; pi++) {
+    var prov = providersSorted[pi];
+    var models = byProvider[prov];
+    var allSel = sel[prov] == null || sel[prov].length === 0;
+    var checkedCount = 0;
+    var rows = '';
+    for (var mi = 0; mi < models.length; mi++) {
+      var mk = models[mi];
+      var mid = mk.slug.split("/").slice(1).join("/");
+      var checked = allSel || sel[prov].indexOf(mid) !== -1;
+      if (checked) checkedCount++;
+      rows += '<label><input type="checkbox" class="model-cb" data-provider="' + prov + '" data-model="' + mid + '" ' + (checked ? "checked" : "") + '/> <span class="model-name" style="font-size:.65rem">' + mk.display + '</span></label>';
+    }
+    html += '<div class="card mt-3"><div class="flex-between mb-3"><h3 style="margin:0;font-size:.75rem">' + prov + ' <span class="text-muted">(' + checkedCount + '/' + models.length + ' selected)</span></h3>' +
+      '<div class="btn-row">' +
+      '<button class="btn btn-ghost btn-sm" onclick="selectAllProvider(\'' + prov + '\')">' + I.box + ' All</button>' +
+      '<button class="btn btn-ghost btn-sm" onclick="deselectAllProvider(\'' + prov + '\')">' + I.trash + ' None</button>' +
+      '</div></div>' +
+      '<div class="model-list-compact" style="max-height:none">' + rows + '</div></div>';
+  }
+  grid.innerHTML = html || '<div class="card"><p class="text-muted">No models found</p></div>';
+  document.getElementById("model-count").textContent = filtered.length + " / " + allModels.length + " models";
+  var chips = document.querySelectorAll("#provider-chips .badge");
+  for (var ci = 0; ci < chips.length; ci++) {
+    var p = chips[ci].dataset.prov;
+    if (!p) continue;
+    if (p === providerFilter) chips[ci].classList.add("active");
+    else if (chips[ci].textContent.indexOf("All") === -1 && chips[ci].textContent.indexOf("None") === -1) chips[ci].classList.remove("active");
+  }
+}
+
+function filterByProvider(prov) {
+  document.getElementById("model-search").value = "";
+  filterModels(prov);
+}
+function selectAllProvider(prov) {
+  var cbs = document.querySelectorAll(".model-cb[data-provider='" + prov + "']");
+  for (var i = 0; i < cbs.length; i++) cbs[i].checked = true;
+  updateProviderCount(prov);
+}
+function deselectAllProvider(prov) {
+  var cbs = document.querySelectorAll(".model-cb[data-provider='" + prov + "']");
+  for (var i = 0; i < cbs.length; i++) cbs[i].checked = false;
+  updateProviderCount(prov);
+}
+function toggleProviderAll(prov) {
+  var cbs = document.querySelectorAll(".model-cb[data-provider='" + prov + "']");
+  if (!cbs.length) return;
+  var allChecked = true;
+  for (var i = 0; i < cbs.length; i++) { if (!cbs[i].checked) { allChecked = false; break; } }
+  for (var i = 0; i < cbs.length; i++) { cbs[i].checked = !allChecked; }
+  updateProviderCount(prov);
+}
+function updateProviderCount(prov) {
+  var cbs = document.querySelectorAll(".model-cb[data-provider='" + prov + "']");
+  var checked = 0;
+  for (var i = 0; i < cbs.length; i++) { if (cbs[i].checked) checked++; }
+  var h3s = document.querySelectorAll("#model-grid h3");
+  for (var i = 0; i < h3s.length; i++) {
+    if (h3s[i].textContent.indexOf(prov) === 0) {
+      h3s[i].innerHTML = prov + ' <span class="text-muted">(' + checked + '/' + cbs.length + ' selected)</span>';
+    }
+  }
+}
+
+async function refreshModels() {
+  toast("Fetching models...");
+  var r = await api("POST", "/api/models/refresh");
+  if (r.ok) { toast("Catalog updated — " + r.modelCount + " models"); renderPage(); }
+  else toast("Refresh failed", "error");
+}
+
+async function saveSelections() {
+  var sel = {};
+  var cbs = document.querySelectorAll(".model-cb");
+  for (var i = 0; i < cbs.length; i++) {
+    var cb = cbs[i];
+    if (!sel[cb.dataset.provider]) sel[cb.dataset.provider] = [];
+    if (cb.checked) sel[cb.dataset.provider].push(cb.dataset.model);
+  }
+  await api("POST", "/api/models/selections", sel);
+  toast("Selections saved"); renderPage();
+}
+
+async function renderPlayground() {
+  var data = await api("GET", "/api/models");
+  var allSlugs = (data.catalog || []).map(function(m) { return m.slug || ""; });
+  return '<h2>' + I.playground + ' Playground</h2>' +
+    '<div class="cards"><div class="card"><div class="card-header"><h3>' + I.send + ' Test Prompt</h3></div>' +
+    '<div class="mb-2"><label class="label">Model</label><input type="text" id="pg-model" list="pg-model-list" placeholder="openai/gpt-5.5"/><datalist id="pg-model-list">' + allSlugs.map(function(m) { return '<option value="' + m + '"/>'; }).join("") + '</datalist></div>' +
+    '<div class="mb-2"><label class="label">System Prompt</label><textarea id="pg-system" rows="2" placeholder="You are a helpful assistant."></textarea></div>' +
+    '<div class="mb-2"><label class="label">User Message</label><textarea id="pg-prompt" rows="3" placeholder="Hello! What can you do?"></textarea></div>' +
+    '<div class="btn-row mb-3"><button class="btn btn-primary" onclick="sendPlayground()">' + I.send + ' Send</button><button class="btn btn-ghost btn-sm" onclick="clearPlayground()">Clear</button></div>' +
+    '<div id="pg-result" class="chat-log" style="min-height:120px">Ready. Select a model and enter a prompt.</div></div></div>';
+}
+
+async function sendPlayground() {
+  var model = document.getElementById("pg-model").value.trim();
+  var system = document.getElementById("pg-system").value.trim();
+  var prompt = document.getElementById("pg-prompt").value.trim();
+  var resultEl = document.getElementById("pg-result");
+  if (!model || !prompt) { resultEl.textContent = "Model and prompt required."; return; }
+  resultEl.innerHTML = '<div class="chat-msg user"><strong>You:</strong> ' + escapeHtml(prompt) + '</div><div class="chat-msg system">Sending to ' + model + '...</div>';
+  try {
+    var r = await api("POST", "/api/playground/send", { model: model, system: system, prompt: prompt });
+    if (r.ok) {
+      resultEl.innerHTML += '<div class="chat-msg assistant"><strong>' + model + ':</strong> ' + escapeHtml(r.text) + '</div>';
+    } else {
+      resultEl.innerHTML += '<div class="chat-msg error"><strong>Error:</strong> ' + escapeHtml(r.error) + '</div>';
+    }
+  } catch (e) {
+    resultEl.innerHTML += '<div class="chat-msg error"><strong>Error:</strong> ' + e.message + '</div>';
+  }
+  resultEl.scrollTop = resultEl.scrollHeight;
+}
+
+function clearPlayground() { document.getElementById("pg-result").innerHTML = "Ready."; }
+
+function escapeHtml(s) { return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+async function renderProfile() {
+  var p = await api("GET", "/api/profile");
+  return '<h2>' + I.profile + ' Codex Profile</h2>' +
+    '<div class="status-row">' +
+    '<div class="stat-card"><div class="stat-label">Active Profile</div><div class="stat-value">' + p.profile + '</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Model</div><div class="stat-value" style="font-size:.75rem">' + p.model + '</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Provider</div><div class="stat-value">' + p.provider + '</div></div>' +
+    '</div>' +
     '<div class="cards">' +
-    '<div class="card"><div class="card-header"><h3>' + I.refresh + ' Refresh</h3></div><p class="text-muted mb-3">Fetch models and rebuild catalog</p><button class="btn btn-primary" onclick="refreshModels()">' + I.refresh + ' Refresh All</button></div>' +
-    '<div class="card"><div class="card-header"><h3>' + I.profile + ' Switch Profile</h3></div><p class="text-muted mb-3">Current: <strong>' + pn + '</strong></p><button class="btn btn-primary" onclick="switchProfile(\x27" + ot + "\x27)">Switch to ' + ol + '</button></div>' +
-    '<div class="card"><div class="card-header"><h3>' + I.refresh + ' Restart</h3></div><p class="text-muted mb-3">Restart gateway process</p><button class="btn btn-danger" onclick="restartGateway()">' + I.refresh + ' Restart Now</button><div id="restart-status" class="mt-3 text-muted"></div></div>' +
+    '<div class="card"><div class="card-header"><h3>' + I.download + ' Download Profile</h3></div><p class="text-muted mb-3">Export current config.toml as a shareable profile.</p><div class="input-row mb-3"><div><label class="label">Name</label><input type="text" id="pf-name" value="omnicodex"/></div></div><button class="btn btn-primary btn-sm" onclick="downloadProfile()">' + I.download + ' Download</button><div id="pf-dl-result" class="mt-3 text-muted"></div></div>' +
+    '<div class="card"><div class="card-header"><h3>Switch to OmniCodex</h3></div><button class="btn btn-primary btn-sm" onclick="switchProfile(\'omnicodex\')">Switch</button><div id="sw-omni" class="mt-3 text-muted"></div></div>' +
+    '<div class="card"><div class="card-header"><h3>Restore Default</h3></div><button class="btn btn-ghost btn-sm" onclick="switchProfile(\'default\')">Restore</button><div id="sw-def" class="mt-3 text-muted"></div></div>' +
     '</div>';
 }
+
+function renderLogs() {
+  return '<h2>' + I.logs + ' Live Logs</h2><div class="chat-log" id="log-view" style="max-height:500px">Connecting...</div>' +
+    '<scr' + 'ipt>(function(){var v=document.getElementById("log-view");var s=new EventSource(API+"/api/logs/stream");s.onmessage=function(e){try{var d=JSON.parse(e.data);v.textContent+=d+"\\n";v.scrollTop=v.scrollHeight}catch(e2){}};s.onerror=function(){v.textContent+="Disconnected. Refresh to reconnect.\\n"}})()<\/scr' + 'ipt>';
+}
+
+async function switchProfile(target) {
+  var r = await api("POST", "/api/profile/switch", { target: target });
+  if (r.ok) { toast("Switched to " + target); setTimeout(renderPage, 800); }
+  else toast(r.error, "error");
+}
+
+async function downloadProfile() {
+  var name = (document.getElementById("pf-name") || {}).value || "omnicodex";
+  name = name.trim() || "omnicodex";
+  var el = document.getElementById("pf-dl-result");
+  try {
+    var res = await fetch(API + "/api/profile/download", { headers: { "x-profile-name": name } });
+    if (!res.ok) throw new Error("Failed");
+    var blob = await res.blob();
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a"); a.href = url; a.download = name + ".config.toml"; a.click();
+    URL.revokeObjectURL(url);
+    if (el) el.innerHTML = '<span style="color:var(--green)">Downloaded</span>';
+  } catch (e) { if (el) el.innerHTML = '<span style="color:var(--red)">Error</span>'; }
+}
+
+function formatUptime(s) {
+  var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+  return h + "h " + m + "m";
+}
+
+renderPage();
+
+</script>
+</body>
+</html>
