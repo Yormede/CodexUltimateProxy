@@ -169,6 +169,29 @@ function readCodexProfile(): { profile: string; model: string; provider: string 
 }
 
 // --- Switch Codex profile (direct TOML edit, no external script) --------------
+
+function deduplicateToml(content: string): string {
+  const lines = content.split("\n");
+  const seen = new Set<string>();
+  const result: string[] = [];
+  for (const line of lines) {
+    const trimmed = line.trim();
+    // Track section headers
+    if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+      if (seen.has(trimmed)) continue; // skip duplicate sections
+      seen.add(trimmed);
+    }
+    // Track key = value lines
+    const eq = trimmed.indexOf("=");
+    if (eq !== -1 && !trimmed.startsWith("#")) {
+      const key = trimmed.substring(0, eq).trim();
+      if (seen.has("key:" + key)) continue; // skip duplicate keys (keep first)
+      seen.add("key:" + key);
+    }
+    result.push(line);
+  }
+  return result.join("\n");
+}
 async function switchProfile(target: "default" | "omnicodex"): Promise<string> {
   const tomlPath = configToml();
   if (!existsSync(tomlPath)) throw new Error("Codex config.toml not found");
@@ -187,12 +210,14 @@ async function switchProfile(target: "default" | "omnicodex"): Promise<string> {
         !l.startsWith("supports_websockets") &&
         !l.startsWith("requires_openai_auth") &&
         !l.startsWith("name =") &&
-        !l.startsWith("# active_profile:")
+        !l.startsWith("model_reasoning_effort") &&
+          !l.startsWith("# active_profile:")
       )
       .join("\n")
       .replace(/^model\s*=\s*"[^"]+"/m, 'model = "gpt-5.5"')
       .replace(/\n{3,}/g, "\n\n");
     content = "# active_profile: default\n" + content;
+    content = deduplicateToml(content);
   } else {
     const omniProfile = join(codexHome(), "omnicodex.config.toml");
     if (!existsSync(omniProfile)) throw new Error("omnicodex.config.toml not found � run 'omnicodex codex install' first");
@@ -227,6 +252,7 @@ async function switchProfile(target: "default" | "omnicodex"): Promise<string> {
     content += `model_reasoning_effort = "${reasoning}"\n`;
 
     const providerBlock = omniContent.match(/\[model_providers\.omnicodex\][\s\S]*/)?.[0] ?? "";
+    content = deduplicateToml(content);
     if (providerBlock && !content.includes("[model_providers.omnicodex]")) {
       content += "\n" + providerBlock;
     }
