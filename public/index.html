@@ -218,7 +218,7 @@ async function renderDashboard() {
     '<h2 class="mt-4">' + I.check + ' Quick Actions</h2>' +
     '<div class="cards">' +
     '<div class="card"><div class="card-header"><h3>' + I.refresh + ' Refresh</h3></div><p class="text-muted mb-3">Fetch models and rebuild catalog</p><button class="btn btn-primary" onclick="refreshModels()">' + I.refresh + ' Refresh All</button></div>' +
-    '<div class="card"><div class="card-header"><h3>' + I.profile + ' Switch Profile</h3></div><p class="text-muted mb-3">Current: <strong>' + pn + '</strong></p><button class="btn btn-primary" onclick="switchProfile(' + JSON.stringify(ot) + ')">Switch to ' + ol + '</button></div>' +
+    '<div class="card"><div class="card-header"><h3>' + I.profile + ' Switch Profile</h3></div><p class="text-muted mb-3">Current: <strong>' + pn + '</strong></p><button class="btn btn-primary" onclick="switchProfile(\x27" + ot + "\x27)">Switch to ' + ol + '</button></div>' +
     '<div class="card"><div class="card-header"><h3>' + I.refresh + ' Restart</h3></div><p class="text-muted mb-3">Restart gateway process</p><button class="btn btn-danger" onclick="restartGateway()">' + I.refresh + ' Restart Now</button><div id="restart-status" class="mt-3 text-muted"></div></div>' +
     '</div>';
 }
