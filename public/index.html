@@ -221,7 +221,8 @@ async function renderDashboard() {
     "<div class=\"card\"><div class=\"card-header\"><h3>" + I.profile + " Switch Profile</h3></div><p class=\"text-muted mb-3\">Current: <strong>" + s.profile + "</strong></p><button class=\"btn btn-primary\" onclick=\"switchProfile('" + (s.profile === "default" ? "omnicodex" : "default") + "')\">Switch to " + (s.profile === "default" ? "OmniCodex" : "Default") + "</button></div>" +
         "<div class=\"card\"><div class=\"card-header\"><h3>" + I.refresh + " Restart Gateway</h3></div><p class=\"text-muted mb-3\">Restart the OmniCodex Gateway process. Admin UI reconnects automatically.</p><button class=\"btn btn-danger\" onclick=\"restartGateway()\">" + I.refresh + " Restart Now</button><div id=\"restart-status\" class=\"mt-3 text-muted\"></div></div>" +
 "</div>";
-}function renderProviders() {
+}
+async function renderProviders() {
   var providers = await api("GET", "/api/providers");
   return '<h2>' + I.providers + ' Providers & Keys</h2>' +
     '<div class="toolbar"><button class="btn btn-primary" onclick="showAddProvider()" id="btn-add-provider">' + I.plus + ' Add Provider</button></div>' +
