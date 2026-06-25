@@ -378,6 +378,17 @@ export function createAdminServer(config: { host: string; port: number }): Serve
               experimental_supported_tools: [],
               supports_search_tool: false,
               supports_reasoning_summaries: false,
+              default_reasoning_summary: "none",
+              support_verbosity: false,
+              default_verbosity: null,
+              apply_patch_tool_type: null,
+              web_search_tool_type: "text",
+              truncation_policy: { mode: "tokens", limit: 10000 },
+              supports_image_detail_original: false,
+              max_context_window: 128000,
+              effective_context_window_percent: 95,
+              input_modalities: ["text"],
+              use_responses_lite: false,
             });
           }
         }
@@ -399,6 +410,22 @@ export function createAdminServer(config: { host: string; port: number }): Serve
         }
         const output = await switchProfile(body.target as "default" | "omnicodex");
         return json(res, 200, { ok: true, output });
+      }
+
+      // ── GET /api/profile/download ──────────────────────────────────────────
+      if (req.method === "GET" && path === "/api/profile/download") {
+        const tomlPath = configToml();
+        if (!existsSync(tomlPath)) return json(res, 404, { error: "config.toml not found" });
+        const content = readFileSync(tomlPath, "utf8");
+        const profileName = req.headers["x-profile-name"] ?? "omnicodex";
+        const filename = `${profileName}.config.toml`;
+        res.writeHead(200, {
+          "content-type": "application/octet-stream",
+          "content-disposition": `attachment; filename="${filename}"`,
+          "access-control-allow-origin": "*",
+        });
+        res.end(content);
+        return;
       }
 
       // ── GET /api/logs/stream (SSE) ─────────────────────────────────────────

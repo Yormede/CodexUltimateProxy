@@ -29,6 +29,27 @@ test("converts Codex Responses messages and tools to chat completions", () => {
   assert.equal((result.tools as any[])[0].function.name, "shell_command");
 });
 
+test("groups consecutive function calls into one assistant tool_calls block", () => {
+  const result = toChatRequest({
+    input: [
+      { type: "message", role: "user", content: "run tools" },
+      { type: "function_call", call_id: "call_1", name: "shell_command", arguments: "{\"command\":\"one\"}" },
+      { type: "function_call", call_id: "call_2", name: "shell_command", arguments: "{\"command\":\"two\"}" },
+      { type: "function_call_output", call_id: "call_1", output: "done one" },
+      { type: "function_call_output", tool_call_id: "call_2", output: "done two" }
+    ]
+  }, "deepseek-chat");
+
+  const messages = result.messages as any[];
+  assert.equal(messages.length, 4);
+  assert.equal(messages[1].role, "assistant");
+  assert.equal(messages[1].tool_calls.length, 2);
+  assert.equal(messages[1].tool_calls[0].id, "call_1");
+  assert.equal(messages[1].tool_calls[1].id, "call_2");
+  assert.equal(messages[2].tool_call_id, "call_1");
+  assert.equal(messages[3].tool_call_id, "call_2");
+});
+
 test("serves a Codex-compatible mock Responses stream", async (t) => {
   const config: GatewayConfig = {
     host: "127.0.0.1",
@@ -397,7 +418,7 @@ test("translates AWS Bedrock InvokeModelWithResponseStream streaming", async (t)
   assert.match(authHeader, /AWS4-HMAC-SHA256/);
 });
 
-test("handles DeepSeek reasoning_content caching and injection", async (t) => {
+test("disables DeepSeek thinking mode and strips reasoning_content history", async (t) => {
   let requestPayload: any = null;
   const upstream = createServer(async (req, res) => {
     let bodyStr = "";
@@ -447,9 +468,10 @@ test("handles DeepSeek reasoning_content caching and injection", async (t) => {
     body: JSON.stringify({ model: "deepseek/deepseek-v4-flash", input: "hello", stream: true })
   });
   const text1 = await res1.text();
-  assert.match(text1, /next-turn-response/);
+  assert.match(text1, /thinking-disabled-response/);
+  assert.deepEqual(requestPayload.thinking, { type: "disabled" });
 
-  // Turn 2 (Cache Hit)
+  // Turn 2
   const res2 = await fetch(`http://127.0.0.1:${port}/v1/responses`, {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -465,10 +487,10 @@ test("handles DeepSeek reasoning_content caching and injection", async (t) => {
   });
   await res2.text();
   assert.equal(requestPayload.messages[1].role, "assistant");
-  assert.equal(requestPayload.messages[1].reasoning_content, "internal-thoughts");
-  assert.equal(requestPayload.thinking, undefined);
+  assert.equal(requestPayload.messages[1].reasoning_content, undefined);
+  assert.deepEqual(requestPayload.thinking, { type: "disabled" });
 
-  // Turn 3 (Cache Miss / Fallback)
+  // Turn 3
   const res3 = await fetch(`http://127.0.0.1:${port}/v1/responses`, {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -483,9 +505,9 @@ test("handles DeepSeek reasoning_content caching and injection", async (t) => {
     })
   });
   const text3 = await res3.text();
-  assert.match(text3, /next-turn-response/);
-  assert.equal(requestPayload.messages[1].reasoning_content, "Thinking...");
-  assert.equal(requestPayload.thinking, undefined);
+  assert.match(text3, /thinking-disabled-response/);
+  assert.equal(requestPayload.messages[1].reasoning_content, undefined);
+  assert.deepEqual(requestPayload.thinking, { type: "disabled" });
 });
 
 test("rejects ambiguous model ids", async (t) => {

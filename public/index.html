@@ -343,6 +343,7 @@ async function saveSelections() {
 // ─── Profile ─────────────────────────────────────────────────────
 async function renderProfile() {
   const profile = await api("GET", "/api/profile");
+  const downloadName = document.getElementById("profile-download-name")?.value || "omnicodex";
   return `
     <h2>🔄 Codex Profile</h2>
     <div class="status-row">
@@ -361,6 +362,21 @@ async function renderProfile() {
     </div>
     <div class="cards">
       <div class="card">
+        <div class="card-header"><h3>📥 Download Profile</h3></div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">
+          Download your current config.toml as a shareable profile file.<br>
+          Others can use it with <code>codex --profile filename</code>
+        </p>
+        <div class="input-group">
+          <label>Profile name (used as filename)</label>
+          <input type="text" id="profile-download-name" value="omnicodex" placeholder="myproxy" />
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="downloadProfile()">📥 Download .config.toml</button>
+        </div>
+        <div id="download-result" style="margin-top:8px;font-size:12px"></div>
+      </div>
+      <div class="card">
         <div class="card-header"><h3>Switch to OmniCodex</h3></div>
         <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Uses all configured providers through the gateway</p>
         <button class="btn btn-primary" onclick="switchProfile('omnicodex')">Switch to OmniCodex</button>
@@ -374,6 +390,28 @@ async function renderProfile() {
       </div>
     </div>
   `;
+}
+
+async function downloadProfile() {
+  const name = document.getElementById("profile-download-name")?.value?.trim() || "omnicodex";
+  const resultEl = document.getElementById("download-result");
+  try {
+    const res = await fetch(`${API}/api/profile/download`, {
+      headers: { "x-profile-name": name }
+    });
+    if (!res.ok) throw new Error("Download failed");
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${name}.config.toml`;
+    a.click();
+    URL.revokeObjectURL(url);
+    if (resultEl) resultEl.innerHTML = `<span style="color:var(--green)">✓ Downloaded as ${name}.config.toml</span>`;
+    toast(`Downloaded ${name}.config.toml`);
+  } catch (err) {
+    if (resultEl) resultEl.innerHTML = `<span style="color:var(--red)">✗ ${err.message}</span>`;
+  }
 }
 
 function renderProfileEvents() {}

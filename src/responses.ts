@@ -96,6 +96,22 @@ function chatContent(content: unknown): unknown {
 
 export function toChatRequest(body: Json, model: string): Json {
   const messages: Json[] = [];
+  let pendingAssistantToolCalls: Json[] = [];
+
+  const flushPendingAssistantToolCalls = (): void => {
+    if (!pendingAssistantToolCalls.length) return;
+    const fcMsg: Json = {
+      role: "assistant",
+      content: "",
+      tool_calls: pendingAssistantToolCalls
+    };
+    if (model.includes("deepseek") || model.includes("reasoner")) {
+      fcMsg.reasoning_content = "Thinking...";
+    }
+    messages.push(fcMsg);
+    pendingAssistantToolCalls = [];
+  };
+
   if (typeof body.instructions === "string" && body.instructions) {
     messages.push({ role: "system", content: body.instructions });
   }
@@ -105,6 +121,7 @@ export function toChatRequest(body: Json, model: string): Json {
     if (!raw || typeof raw !== "object") continue;
     const item = raw as Json;
     if (item.type === "message") {
+      flushPendingAssistantToolCalls();
       const role = item.role === "developer" ? "system" : String(item.role ?? "user");
       const content = chatContent(item.content);
       const msg: Json = { role, content };
@@ -126,27 +143,21 @@ export function toChatRequest(body: Json, model: string): Json {
       }
       messages.push(msg);
     } else if (item.type === "function_call") {
-      const fcMsg: Json = {
-        role: "assistant",
-        content: "",
-        tool_calls: [{
-          id: String(item.call_id ?? item.id ?? randomUUID()),
-          type: "function",
-          function: { name: String(item.name ?? ""), arguments: String(item.arguments ?? "{}") }
-        }]
-      };
-      if (model.includes("deepseek") || model.includes("reasoner")) {
-        fcMsg.reasoning_content = "Thinking...";
-      }
-      messages.push(fcMsg);
+      pendingAssistantToolCalls.push({
+        id: String(item.call_id ?? item.id ?? randomUUID()),
+        type: "function",
+        function: { name: String(item.name ?? ""), arguments: String(item.arguments ?? "{}") }
+      });
     } else if (item.type === "function_call_output") {
+      flushPendingAssistantToolCalls();
       messages.push({
         role: "tool",
-        tool_call_id: String(item.call_id ?? ""),
+        tool_call_id: String(item.call_id ?? item.tool_call_id ?? ""),
         content: typeof item.output === "string" ? item.output : JSON.stringify(item.output ?? null)
       });
     }
   }
+  flushPendingAssistantToolCalls();
 
   // Nettoyage séquentiel des blocs tool_calls incomplets
   // On traite les messages un par un : pour chaque assistant avec tool_calls,
