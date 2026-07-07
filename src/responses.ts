@@ -1,8 +1,9 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { randomUUID, createSign, createHash, createHmac } from "node:crypto";
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { randomUUID, createHash, createHmac } from "node:crypto";
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { dirname, join } from "node:path";
 import type { ResolvedModel } from "./registry.ts";
+import { resolveVertexToken, resolveAwsCreds } from "./credentials.ts";
 
 type Json = Record<string, unknown>;
 
@@ -31,6 +32,7 @@ function addToReasoningCache(content: string, reasoning: string): void {
   reasoningCache.set(content, reasoning);
 
   try {
+    mkdirSync(dirname(cachePath), { recursive: true }); // ponytail: dir may not exist yet
     const obj = Object.fromEntries(reasoningCache.entries());
     writeFileSync(cachePath, JSON.stringify(obj, null, 2), "utf8");
   } catch (e) {
@@ -922,63 +924,7 @@ export async function processGoogleStream(
 }
 
 async function getVertexAccessToken(): Promise<string> {
-  if (process.env.GOOGLE_VERTEX_ACCESS_TOKEN) {
-    return process.env.GOOGLE_VERTEX_ACCESS_TOKEN;
-  }
-  const serviceAccountPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-  if (serviceAccountPath && existsSync(serviceAccountPath)) {
-    try {
-      const sa = JSON.parse(readFileSync(serviceAccountPath, "utf8"));
-      const clientEmail = sa.client_email;
-      const privateKey = sa.private_key;
-      if (clientEmail && privateKey) {
-        const header = Buffer.from(JSON.stringify({ alg: "RS256", typ: "JWT" })).toString("base64url");
-        const now = Math.floor(Date.now() / 1000);
-        const payload = Buffer.from(JSON.stringify({
-          iss: clientEmail,
-          scope: "https://www.googleapis.com/auth/cloud-platform",
-          aud: "https://oauth2.googleapis.com/token",
-          exp: now + 3600,
-          iat: now
-        })).toString("base64url");
-        
-        const sign = createSign("RSA-SHA256");
-        sign.update(`${header}.${payload}`);
-        const signature = sign.sign(privateKey, "base64url");
-        const jwt = `${header}.${payload}.${signature}`;
-        
-        const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
-          method: "POST",
-          headers: { "content-type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({
-            grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
-            assertion: jwt
-          })
-        });
-        if (tokenRes.ok) {
-          const data = await tokenRes.json() as { access_token: string };
-          return data.access_token;
-        } else {
-          throw new Error(`Failed to exchange JWT for token: ${await tokenRes.text()}`);
-        }
-      }
-    } catch (e) {
-      console.warn("Could not sign JWT using GOOGLE_APPLICATION_CREDENTIALS, trying fallback:", e);
-    }
-  }
-
-  try {
-    const { spawnSync } = await import("node:child_process");
-    const gcloud = process.platform === "win32"
-      ? spawnSync("cmd.exe", ["/d", "/s", "/c", "gcloud auth print-access-token"], { encoding: "utf8" })
-      : spawnSync("gcloud", ["auth", "print-access-token"], { encoding: "utf8" });
-    const token = gcloud.stdout?.trim();
-    if (token) return token;
-  } catch (e) {
-    // ignore
-  }
-
-  throw new Error("No Google Vertex access token found. Please set GOOGLE_VERTEX_ACCESS_TOKEN or GOOGLE_APPLICATION_CREDENTIALS.");
+  return resolveVertexToken();
 }
 
 export async function googleVertexResponses(
@@ -1148,10 +1094,11 @@ export async function bedrockResponses(
   body: Json
 ): Promise<void> {
   const region = process.env.AWS_REGION ?? "us-east-1";
-  const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-  const sessionToken = process.env.AWS_SESSION_TOKEN;
-  const bearerToken = process.env.AWS_BEARER_TOKEN_BEDROCK;
+  const creds = resolveAwsCreds();
+  const accessKeyId = creds.accessKeyId;
+  const secretAccessKey = creds.secretAccessKey;
+  const sessionToken = creds.sessionToken;
+  const bearerToken = creds.bearer;
 
   const base = model.provider.baseURL ?? `https://bedrock-runtime.${region}.amazonaws.com`;
   const url = new URL(`${base.replace(/\/+$/, "")}/model/${encodeURIComponent(model.upstreamModel)}/invoke-with-response-stream`);
@@ -1256,6 +1203,159 @@ export async function bedrockResponses(
   res.end();
 }
 
+
+// --- France Student Bridge adapter --------------------------------------------
+// ponytail: talks to local bridge on localhost:8765, no auth needed (bridge handles it)
+
+function toBridgeRequest(body: Json): { message: string; agentId: string; stream: boolean } {
+  const input = Array.isArray(body.input) ? body.input : [{ type: "message", role: "user", content: body.input }];
+  let message = "";
+  for (const raw of input) {
+    if (!raw || typeof raw !== "object") continue;
+    const item = raw as Json;
+    if (item.type === "message" && item.role === "user") {
+      message += (typeof item.content === "string" ? item.content : outputText(item.content)) + "\n";
+    }
+  }
+  if (typeof body.instructions === "string" && body.instructions) {
+    message = body.instructions + "\n\n" + message;
+  }
+  // ponytail: last user message only, bridge is stateless per call
+  return { message: message.trim(), agentId: "50", stream: true };
+}
+
+export async function franceStudentResponses(
+  req: IncomingMessage,
+  res: ServerResponse,
+  model: ResolvedModel,
+  body: Json
+): Promise<void> {
+  const bridgeReq = toBridgeRequest(body);
+  // Map model ID to France Student agent ID
+  const agentMap: Record<string, string> = {
+    "claude-sonnet-4-6": "50",
+    "claude-opus-4-8": "100",
+    "claude-haiku-4-5": "51",
+    "deepseek-v3.2": "40",
+    "mistral-large-3": "43",
+    "kimi-k2.5": "42",
+    "gpt-5.4-nano": "59",
+  };
+  bridgeReq.agentId = agentMap[model.upstreamModel] ?? "50";
+
+  const baseURL = model.provider.baseURL ?? "http://127.0.0.1:8765";
+  const response = await checkedFetch(
+    new URL(`${baseURL.replace(/\/+$/, "")}/chat/completions`),
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(bridgeReq),
+      signal: AbortSignal.timeout(300_000),
+    }
+  );
+  if (!response.ok) throw await upstreamError(response);
+  if (!response.body) throw new Error("Bridge returned no body");
+
+  res.writeHead(200, {
+    "content-type": "text/event-stream; charset=utf-8",
+    "cache-control": "no-cache",
+    connection: "keep-alive",
+  });
+
+  const responseId = `resp_${randomUUID()}`;
+  const messageId = `msg_${randomUUID()}`;
+  event(res, { type: "response.created", response: { id: responseId } });
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  req.once("close", () => void reader.cancel());
+
+  let buffer = "";
+  let fullText = "";
+  let textStarted = false;
+
+  while (true) {
+    const chunk = await reader.read();
+    if (chunk.done) break;
+    buffer += decoder.decode(chunk.value, { stream: true });
+
+    // Parse SSE: each block is "data: {...}\n\n"
+    const parts = buffer.split("\n\n");
+    buffer = parts.pop() ?? "";
+
+    for (const block of parts) {
+      const trimmed = block.trim();
+      if (!trimmed) continue;
+      // ponytail: bridge sends "data: [DONE]" at the end
+      if (trimmed === "data: [DONE]") continue;
+      if (!trimmed.startsWith("data: ")) continue;
+
+      const jsonStr = trimmed.slice(5).trimStart();
+      if (!jsonStr || jsonStr === "[DONE]") continue;
+
+      try {
+        const parsed = JSON.parse(jsonStr) as Json;
+        const text = typeof parsed.text === "string" ? parsed.text : "";
+        // Bridge can also send content.text
+        const content = (parsed.content as Json) ?? {};
+        const contentText = typeof content.text === "string" ? content.text : "";
+        const delta = text || contentText;
+
+        if (delta) {
+          if (!textStarted) {
+            textStarted = true;
+            event(res, {
+              type: "response.output_item.added",
+              output_index: 0,
+              item: { type: "message", role: "assistant", id: messageId, content: [] },
+            });
+          }
+          fullText += delta;
+          event(res, {
+            type: "response.output_text.delta",
+            item_id: messageId,
+            output_index: 0,
+            content_index: 0,
+            delta,
+          });
+        }
+
+        // Check if this is the final message (isFinished or finishedReason)
+        if (parsed.isFinished === true || parsed.finishedReason) {
+          // will be handled after the loop
+        }
+      } catch {
+        // Ignore malformed JSON in SSE
+      }
+    }
+  }
+
+  if (textStarted) {
+    event(res, {
+      type: "response.output_item.done",
+      output_index: 0,
+      item: { type: "message", role: "assistant", id: messageId, content: [{ type: "output_text", text: fullText }] },
+    });
+  } else {
+    // No text output — emit an empty message so Codex doesn't hang
+    event(res, {
+      type: "response.output_item.added",
+      output_index: 0,
+      item: { type: "message", role: "assistant", id: messageId, content: [] },
+    });
+    event(res, {
+      type: "response.output_item.done",
+      output_index: 0,
+      item: { type: "message", role: "assistant", id: messageId, content: [{ type: "output_text", text: "" }] },
+    });
+  }
+
+  event(res, {
+    type: "response.completed",
+    response: { id: responseId, usage: responseUsage(undefined) },
+  });
+  res.end();
+}
 export function mockResponses(res: ServerResponse, model: ResolvedModel, body: Json): void {
   res.writeHead(200, {
     "content-type": "text/event-stream; charset=utf-8",

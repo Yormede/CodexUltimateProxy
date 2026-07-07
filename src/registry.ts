@@ -26,6 +26,20 @@ function loadSnapshot(path = resolve("data/providers.snapshot.json")): Snapshot 
   return JSON.parse(readFileSync(path, "utf8")) as Snapshot;
 }
 
+// ponytail: resolved live so admin edits + OMNICODEX_CONFIG overrides take effect without restart
+function configPath(): string {
+  return process.env.OMNICODEX_CONFIG ? resolve(process.env.OMNICODEX_CONFIG) : resolve("omnicodex.config.json");
+}
+
+function loadConfigProviders(): Record<string, ProviderConfig> {
+  const path = configPath();
+  if (!existsSync(path)) return {};
+  try {
+    const cfg = JSON.parse(readFileSync(path, "utf8").replace(/^\uFEFF/, "")) as Partial<GatewayConfig>;
+    return cfg.providers ?? {};
+  } catch { return {}; }
+}
+
 export class Registry {
   readonly snapshot = loadSnapshot();
   readonly config: GatewayConfig;
@@ -35,16 +49,31 @@ export class Registry {
   }
 
   provider(id: string): ProviderConfig | undefined {
+    // Merge persisted config file (admin UI edits) OVER startup defaults so edits are live.
+    const persisted = loadConfigProviders()[id];
     const configured = this.config.providers[id];
-    if (configured) return configured.enabled === false ? undefined : configured;
+    if (configured || persisted) {
+      const merged = { ...(configured ?? {}), ...(persisted ?? {}) } as ProviderConfig;
+      if (merged.enabled === false) return undefined;
+      const source = this.snapshot.providers[id];
+      return {
+        protocol: merged.protocol ?? source?.protocol ?? "openai-compatible",
+        baseURL: merged.baseURL ?? source?.api,
+        keyEnv: merged.keyEnv ?? source?.env?.[0],
+        forwardAuthorization: merged.forwardAuthorization,
+        enabled: merged.enabled,
+        models: merged.models ?? source?.models,
+      };
+    }
+
+    // Snapshot fallback — accept any provider that has protocol != unsupported
     const source = this.snapshot.providers[id];
     if (!source || source.protocol === "unsupported") return undefined;
-    if (!source.api && !["google-vertex", "amazon-bedrock", "azure", "azure-cognitive-services"].includes(id)) return undefined;
     return {
       protocol: source.protocol,
       baseURL: source.api,
       keyEnv: source.env[0],
-      models: source.models
+      models: source.models,
     };
   }
 
@@ -64,16 +93,28 @@ export class Registry {
     return { id, providerId, upstreamModel, provider, metadata };
   }
 
-  providers(): Array<{ id: string; protocol: Protocol; configured: boolean; credentialReady: boolean; models: number }> {
-    const ids = new Set([...Object.keys(this.snapshot.providers), ...Object.keys(this.config.providers)]);
+  providers(): Array<{
+    id: string; name?: string; protocol: Protocol; baseURL?: string; keyEnv?: string;
+    configured: boolean; credentialReady: boolean; enabled: boolean; models: number;
+  }> {
+    const persisted = loadConfigProviders();
+    const ids = new Set([
+      ...Object.keys(this.snapshot.providers),
+      ...Object.keys(this.config.providers),
+      ...Object.keys(persisted),
+    ]);
     return [...ids].sort().map((id) => {
-      const configured = this.config.providers[id];
+      const configured = { ...(this.config.providers[id] ?? {}), ...(persisted[id] ?? {}) };
       const source = this.snapshot.providers[id];
       const provider = this.provider(id);
       return {
         id,
-        protocol: configured?.protocol ?? source?.protocol ?? "unsupported",
+        name: source?.name,
+        protocol: (provider?.protocol ?? configured?.protocol ?? source?.protocol ?? "unsupported") as Protocol,
+        baseURL: provider?.baseURL,
+        keyEnv: provider?.keyEnv,
         configured: Boolean(provider),
+        enabled: configured?.enabled !== false,
         credentialReady: Boolean(
           provider &&
           (
@@ -83,7 +124,7 @@ export class Registry {
             process.env[provider.keyEnv]
           )
         ),
-        models: Object.keys(configured?.models ?? source?.models ?? {}).length
+        models: Object.keys(provider?.models ?? source?.models ?? {}).length,
       };
     });
   }
@@ -96,7 +137,7 @@ export class Registry {
       if (!provider) continue;
       const models = {
         ...(this.snapshot.providers[item.id]?.models ?? {}),
-        ...(provider.models ?? {})
+        ...(provider.models ?? {}),
       };
       for (const [model, metadata] of Object.entries(models)) {
         output.push({
@@ -104,7 +145,7 @@ export class Registry {
           providerId: item.id,
           upstreamModel: model,
           provider,
-          metadata
+          metadata,
         });
       }
     }
