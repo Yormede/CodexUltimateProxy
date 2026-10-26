@@ -533,6 +533,26 @@ function toAnthropicRequest(body: Json, model: string, maxTokens: number): Json 
       input_schema: tool.parameters ?? { type: "object", properties: {} }
     }];
   }) : [];
+    // DEBUG: log the final messages for deepseek
+  if (model.includes("deepseek")) {
+    console.error("DEBUG toChatRequest messages:", JSON.stringify(messages, null, 2).slice(0, 2000));
+  }
+  // DeepSeek: extract image_url from content[] into top-level images field
+  if (model.includes("deepseek")) {
+    for (const msg of messages) {
+      if (Array.isArray(msg.content)) {
+        const images: string[] = [];
+        msg.content = msg.content.filter((part: any) => {
+          if (part?.type === "image_url" && part?.image_url?.url) {
+            images.push(part.image_url.url);
+            return false;
+          }
+          return true;
+        });
+        if (images.length) (msg as any).images = images;
+      }
+    }
+  }
   return {
     model,
     system: typeof body.instructions === "string" ? body.instructions : undefined,

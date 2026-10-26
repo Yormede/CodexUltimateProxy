@@ -6,9 +6,10 @@ import { spawnSync } from "node:child_process";
 import { loadConfig } from "./config.ts";
 import { Registry } from "./registry.ts";
 import { createGatewayServer } from "./server.ts";
-import { createAdminServer } from "./admin.ts";
+import { createAdminServer, pushLog } from "./admin.ts";
 import { syncProviders } from "../scripts/sync-providers.ts";
 import { generateCodexCatalog } from "../scripts/generate-codex-catalog.ts";
+import { runDeviceFlow } from "./oauth.ts";
 
 const command = process.argv[2] ?? "serve";
 const config = loadConfig();
@@ -74,6 +75,14 @@ process.on("unhandledRejection", (reason) => {
 });
 
 if (command === "serve") {
+  // Tee console output into the admin log ring buffer for the live Logs view.
+  for (const level of ["log", "error", "warn"] as const) {
+    const orig = console[level].bind(console);
+    console[level] = (...args: unknown[]): void => {
+      try { pushLog(args.map((a) => typeof a === "string" ? a : JSON.stringify(a)).join(" ")); } catch { /* ignore */ }
+      orig(...args);
+    };
+  }
   // Gateway on configured port
   const gateway = createGatewayServer(config);
   gateway.listen(config.port, config.host, () => {
@@ -111,7 +120,34 @@ if (command === "serve") {
   installCodex();
 } else if (command === "codex" && process.argv[3] === "uninstall") {
   uninstallCodex();
+} else if (command === "oauth") {
+  const provider = process.argv[3];
+  const oauthCfg = {
+    deviceAuthEndpoint: process.env.OMNICODEX_OAUTH_DEVICE_URL ?? "",
+    tokenEndpoint: process.env.OMNICODEX_OAUTH_TOKEN_URL ?? "",
+    clientId: process.env.OMNICODEX_OAUTH_CLIENT_ID ?? "",
+    scope: process.env.OMNICODEX_OAUTH_SCOPE,
+    clientSecret: process.env.OMNICODEX_OAUTH_CLIENT_SECRET,
+  };
+  if (!provider || !oauthCfg.deviceAuthEndpoint || !oauthCfg.tokenEndpoint || !oauthCfg.clientId) {
+    console.error("Usage: omnicodex oauth <provider>  — set OMNICODEX_OAUTH_DEVICE_URL, OMNICODEX_OAUTH_TOKEN_URL, OMNICODEX_OAUTH_CLIENT_ID [, OMNICODEX_OAUTH_SCOPE, OMNICODEX_OAUTH_CLIENT_SECRET]");
+    process.exitCode = 1;
+  } else {
+    const token = await runDeviceFlow(oauthCfg, {
+      onPrompt: (a) => console.log(`\nOpen ${a.verification_uri_complete ?? a.verification_uri} and enter code: ${a.user_code}\n`),
+    });
+    const keyEnv = registry.provider(provider)?.keyEnv ?? `${provider.toUpperCase().replace(/[^A-Z0-9]/g, "_")}_API_KEY`;
+    const keysPath = resolve("omnicodex.keys.json");
+    const keys = existsSync(keysPath) ? JSON.parse(readFileSync(keysPath, "utf8")) as Record<string, string> : {};
+    keys[provider] = token;
+    writeFileSync(keysPath, JSON.stringify(keys, null, 2));
+    const envPath = resolve(".env");
+    const existing = existsSync(envPath) ? readFileSync(envPath, "utf8") : "";
+    const kept = existing.split("\n").filter((l) => l.trim() && !l.startsWith(keyEnv + "="));
+    writeFileSync(envPath, [...kept, `${keyEnv}=${token}`].join("\n") + "\n");
+    console.log(`Authorized. Token stored for ${provider} (${keyEnv}).`);
+  }
 } else {
-  console.error("Usage: omnicodex serve|sync|providers|models [provider]|doctor|codex install|codex uninstall");
+  console.error("Usage: omnicodex serve|sync|providers|models [provider]|doctor|oauth <provider>|codex install|codex uninstall");
   process.exitCode = 1;
 }

@@ -69,6 +69,9 @@ label.label{display:block;font-size:.62rem;color:var(--muted);margin-bottom:4px;
 .toolbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
 .badge{display:inline-flex;align-items:center;gap:4px;font-size:.58rem;padding:2px 8px;border-radius:12px;background:var(--card2);border:1px solid var(--border);color:var(--muted)}
 .badge.active{background:#1a2740;border-color:var(--acc);color:var(--acc)}
+.badge.verified{background:#052e16;border-color:var(--green);color:var(--green)}
+.badge.community-tag{background:#1c1230;border-color:#7c3aed;color:#a78bfa}
+.badge.installed{background:#052e16;border-color:var(--green2);color:var(--green)}
 .chat-log{background:#05080c;border:1px solid var(--border);border-radius:var(--radius);padding:14px;min-height:150px;max-height:400px;overflow-y:auto;font-family:"JetBrains Mono",monospace;font-size:.6rem;line-height:1.6;margin-bottom:10px;white-space:pre-wrap}
 .chat-msg{margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #0a0e14}
 .chat-msg.user{color:var(--acc)}
@@ -83,16 +86,39 @@ label.label{display:block;font-size:.62rem;color:var(--muted);margin-bottom:4px;
 .text-muted{font-size:.6rem;color:var(--muted)}.mono{font-family:"JetBrains Mono",monospace}
 .ma-0{margin:0}.mt-2{margin-top:4px}.mt-3{margin-top:8px}.mt-4{margin-top:12px}.mb-2{margin-bottom:4px}.mb-3{margin-bottom:8px}.mb-4{margin-bottom:12px}
 .flex-between{display:flex;justify-content:space-between;align-items:center}
-
+.avatar{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:5px;color:#fff;font-size:.6rem;font-weight:700;flex-shrink:0}
+/* Community grid */
+.community-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.community-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;position:relative;transition:.15s}
+.community-card:hover{border-color:#2d3a4a;transform:translateY(-1px)}
+.community-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.community-card h4{font-size:var(--xs);font-weight:600;display:flex;align-items:center;gap:6px}
+.community-desc{font-size:.62rem;color:var(--muted);margin-bottom:10px;line-height:1.4}
+.community-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.pill{font-size:.58rem;padding:2px 7px;border-radius:10px;background:var(--card2);border:1px solid var(--border);color:var(--muted);font-family:"JetBrains Mono",monospace}
+/* Detect indicator */
+.detect-row{display:flex;gap:8px;align-items:end;margin-bottom:8px}
+.detect-row>div:first-child{flex:1}
+.detect-result{font-size:.62rem;padding:8px 10px;border-radius:6px;background:#0a0e14;border:1px solid var(--border);margin-top:8px;font-family:"JetBrains Mono",monospace;white-space:pre-wrap}
+.detect-result.ok{border-color:var(--green);color:var(--green)}
+.detect-result.err{border-color:var(--red);color:var(--red)}
+.detect-result.loading{color:var(--amber)}
+/* Export JSON pre */
+.export-pre{background:#05080c;border:1px solid var(--border);border-radius:6px;padding:12px;font-size:.6rem;font-family:"JetBrains Mono",monospace;overflow-x:auto;white-space:pre;max-height:300px;overflow-y:auto;margin-top:8px;color:var(--green)}
+/* Spinner */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{display:inline-block;width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--acc);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
 </style>
 </head>
 <body>
 <aside class="sidebar"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/><path d="M12 3v2"/><path d="M12 19v2"/><path d="M3 12h2"/><path d="M19 12h2"/></svg> OmniCodex</div>
 <button class="nav-item active" data-page="dashboard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Dashboard</button>
 <button class="nav-item" data-page="providers"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Providers</button>
+<button class="nav-item" data-page="community"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Community</button>
 <button class="nav-item" data-page="models"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="8" y1="8" x2="8" y2="8.01"/><line x1="8" y1="12" x2="8" y2="12.01"/><line x1="8" y1="16" x2="8" y2="16.01"/></svg> Models</button>
 <button class="nav-item" data-page="playground"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Playground</button>
 <button class="nav-item" data-page="profile"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile</button>
+<button class="nav-item" data-page="conversations"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Conversations</button>
 <button class="nav-item" data-page="logs"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Logs</button>
 </aside>
 <main class="main" id="main"></main>
@@ -174,9 +200,11 @@ async function renderPage() {
     switch (currentPage) {
       case "dashboard": main.innerHTML = await renderDashboard(); break;
       case "providers": main.innerHTML = await renderProviders(); break;
+      case "community": main.innerHTML = await renderCommunity(); break;
       case "models": main.innerHTML = await renderModels(); initModelPage(); break;
       case "playground": main.innerHTML = await renderPlayground(); break;
       case "profile": main.innerHTML = await renderProfile(); break;
+      case "conversations": main.innerHTML = await renderConversations(); break;
       case "logs": main.innerHTML = renderLogs(); break;
     }
   } catch (e) { main.innerHTML = '<h2>Error</h2><p>' + e.message + '</p>'; }
@@ -225,29 +253,53 @@ async function renderDashboard() {
 }
 async function renderProviders() {
   var providers = await api("GET", "/api/providers");
-  return '<h2>' + I.providers + ' Providers & Keys</h2>' +
-    '<div class="toolbar"><button class="btn btn-primary" onclick="showAddProvider()" id="btn-add-provider">' + I.plus + ' Add Provider</button></div>' +
-    '<div class="cards">' + providers.map(function(p) {
-      return '<div class="card" id="provider-' + p.id + '">' +
-        '<div class="card-header"><h3>' + I.database + ' ' + p.name + '</h3><span class="status ' + (p.hasKey ? 'online' : 'offline') + '"><span class="status-dot"></span> ' + (p.hasKey ? 'Configured' : 'No key') + '</span></div>' +
-        '<p class="text-muted">' + p.website + ' · ' + p.baseURL + '</p>' +
-        (p.hasKey ? '<p class="text-muted mt-2">Key: <code class="mono">' + p.keyPreview + '</code></p>' : '') +
-        '<div class="mt-3"><label class="label">API Key</label><div class="input-row"><input type="password" id="key-' + p.id + '" placeholder="' + p.authHeader + ' ..."/></div></div>' +
-        '<div class="btn-row mt-3">' +
-        '<button class="btn btn-primary btn-sm" onclick="saveKey(\'' + p.id + '\')">' + I.lock + ' Save</button>' +
-        (p.hasKey ? '<button class="btn btn-ghost btn-sm" onclick="testKey(\'' + p.id + '\')">' + I.test + ' Test</button>' : '') +
-        (p.hasKey ? '<button class="btn btn-danger btn-sm" onclick="deleteKey(\'' + p.id + '\')">' + I.trash + ' Delete</button>' : '') +
-        '</div><div id="test-result-' + p.id + '" class="mt-3 text-muted"></div></div>';
-    }).join("") + '</div>' +
+  var cards = providers.map(function(p) {
+    var initial = (p.name || p.id).charAt(0).toUpperCase();
+    var ready = p.credentialReady ? "online" : "offline";
+    var readyText = p.credentialReady ? "Ready" : (p.hasKey ? "Key set" : "No key");
+    return '<div class="card" id="provider-' + p.id + '">' +
+      '<div class="card-header"><h3><span class="avatar" style="background:' + (p.color||'#6366f1') + '">' + initial + '</span> ' + p.name + ' <span class="text-muted mono" style="font-size:.55rem">' + p.protocol + '</span></h3>' +
+      '<span class="status ' + ready + '"><span class="status-dot"></span> ' + readyText + '</span></div>' +
+      '<p class="text-muted">' + (p.enabled ? '' : '<span style="color:var(--amber)">disabled · </span>') + (p.website || '') + '</p>' +
+      '<div class="mt-3"><label class="label">Base URL</label><input type="text" id="url-' + p.id + '" value="' + (p.baseURL || '') + '"/></div>' +
+      '<div class="input-row mt-2"><div><label class="label">Protocol</label><input type="text" id="proto-' + p.id + '" value="' + p.protocol + '"/></div>' +
+      '<div><label class="label">Key env var</label><input type="text" id="env-' + p.id + '" value="' + (p.keyEnv || '') + '"/></div></div>' +
+      '<div class="mt-3"><label class="label">API Key ' + (p.hasKey ? '· saved ' + p.keyPreview : '') + '</label><input type="password" id="key-' + p.id + '" placeholder="paste key, then Save Key"/></div>' +
+      '<div class="btn-row mt-3">' +
+      '<button class="btn btn-primary btn-sm" onclick="saveProvider(\'' + p.id + '\')">' + I.check + ' Save</button>' +
+      '<button class="btn btn-green btn-sm" onclick="saveKey(\'' + p.id + '\')">' + I.lock + ' Save Key</button>' +
+      '<button class="btn btn-ghost btn-sm" onclick="testKey(\'' + p.id + '\')">' + I.test + ' Test</button>' +
+      '<button class="btn btn-ghost btn-sm" onclick="toggleProvider(\'' + p.id + '\',' + (p.enabled ? 'false' : 'true') + ')">' + (p.enabled ? 'Disable' : 'Enable') + '</button>' +
+      (p.hasKey ? '<button class="btn btn-ghost btn-sm" onclick="deleteKey(\'' + p.id + '\')">' + I.trash + ' Key</button>' : '') +
+      '<button class="btn btn-danger btn-sm" onclick="deleteProvider(\'' + p.id + '\',' + (p.builtin ? 'true' : 'false') + ')">' + I.trash + ' ' + (p.builtin ? 'Disable' : 'Delete') + '</button>' +
+      '</div><div id="test-result-' + p.id + '" class="mt-3 text-muted"></div></div>';
+  }).join("");
+  return '<h2>' + I.providers + ' Providers &amp; Keys</h2>' +
+    '<div class="toolbar"><button class="btn btn-primary" onclick="showAddProvider()" id="btn-add-provider">' + I.plus + ' Add Provider</button>' +
+    '<button class="btn btn-ghost btn-sm" onclick="downloadFile(\'/api/config/download\',\'omnicodex.config.json\')">  ' + I.download + ' Export config</button>' +
+    '<span class="badge">' + providers.length + ' providers</span></div>' +
+    '<div class="cards">' + cards + '</div>' +
+    // ── Wizard modal ──────────────────────────────────────────────────────────
     '<div id="add-provider-modal" class="card mt-4 hidden">' +
-    '<h3 class="mb-3">' + I.plus + ' Add Custom Provider</h3>' +
-    '<div class="input-row mb-2"><div><label class="label">Provider ID (slug)</label><input type="text" id="new-prov-id" placeholder="my-provider"/></div><div><label class="label">Display Name</label><input type="text" id="new-prov-name" placeholder="My Provider"/></div></div>' +
-    '<div class="mb-2"><label class="label">Base URL</label><input type="text" id="new-prov-url" placeholder="https://api.example.com/v1"/></div>' +
-    '<div class="mb-2"><label class="label">Auth Header Type</label><input type="text" id="new-prov-auth" value="Bearer"/></div>' +
-    '<div class="btn-row"><button class="btn btn-primary btn-sm" onclick="addCustomProvider()">' + I.check + ' Add</button><button class="btn btn-ghost btn-sm" onclick="hideAddProvider()">Cancel</button></div>' +
+    '<h3 class="mb-3">' + I.plus + ' Add Provider — Wizard</h3>' +
+    '<div class="card" style="background:#080c12;border-color:#1a2332;margin-bottom:12px">' +
+    '<p style="font-size:.62rem;color:var(--muted);margin-bottom:10px">Step 1 · Enter the Base URL and optionally an API key, then click <strong>Auto-Detect</strong> to identify the protocol automatically.</p>' +
+    '<div class="detect-row">' +
+    '<div><label class="label">Base URL</label><input type="text" id="new-prov-url" placeholder="https://api.example.com/v1" oninput="clearDetect()"/></div>' +
+    '<button class="btn btn-ghost" style="flex-shrink:0;margin-bottom:0" onclick="detectProvider()" id="btn-detect">' + I.test + ' Auto-Detect</button>' +
     '</div>' +
+    '<div class="mb-2"><label class="label">API Key (optional for detection)</label><input type="password" id="new-prov-key-detect" placeholder="sk-..."/></div>' +
+    '<div id="detect-result" class="detect-result hidden"></div>' +
+    '</div>' +
+    '<p style="font-size:.62rem;color:var(--muted);margin-bottom:10px">Step 2 · Review and adjust the fields below, then click <strong>Add</strong>.</p>' +
+    '<div class="input-row mb-2"><div><label class="label">Provider ID (slug)</label><input type="text" id="new-prov-id" placeholder="my-provider"/></div><div><label class="label">Display Name</label><input type="text" id="new-prov-name" placeholder="My Provider"/></div></div>' +
+    '<div class="input-row mb-2"><div><label class="label">Protocol</label><input type="text" id="new-prov-proto" value="openai-compatible"/></div><div><label class="label">Key env var</label><input type="text" id="new-prov-env" placeholder="MYPROVIDER_API_KEY"/></div></div>' +
+    '<div id="detect-models-list" class="hidden mt-3"><label class="label">Detected Models (first 8)</label><div id="detect-models-inner" class="detect-result" style="color:var(--acc)"></div></div>' +
+    '<div class="btn-row mt-3"><button class="btn btn-primary btn-sm" onclick="addCustomProvider()">' + I.check + ' Add</button><button class="btn btn-ghost btn-sm" onclick="hideAddProvider()">Cancel</button></div>' +
+    '</div>' +
+    // ── Open registry import ─────────────────────────────────────────────────
     '<div id="snap-import" class="card mt-4"><h3 class="mb-3">' + I.globe + ' Import from Open Registry</h3>' +
-    '<p class="text-muted mb-3">Search providers by name or ID. Already added providers are grayed out and disabled.</p>' +
+    '<p class="text-muted mb-3">Search 144 providers by name or ID. Imports persist to your config.</p>' +
     '<div class="search-bar mb-3"><input type="search" id="snap-search" placeholder="Search by name or ID..." oninput="filterSnapProviders()"/>' + I.search + '</div>' +
     '<div id="snap-actions" class="btn-row mb-3 hidden">' +
     '<button class="btn btn-primary btn-sm" onclick="importSnapshotProviders()">' + I.plus + ' Import Selected</button>' +
@@ -256,10 +308,61 @@ async function renderProviders() {
     '<span id="snap-selected-count" class="badge">0 selected</span></div>' +
     '<div class="model-list-compact" id="snap-list" style="max-height:300px"></div>' +
     '<div id="snap-result" class="mt-3 text-muted"></div></div>';
+}';
 }
 
-function showAddProvider() { document.getElementById("add-provider-modal").classList.remove("hidden"); }
+function showAddProvider() { document.getElementById("add-provider-modal").classList.remove("hidden"); document.getElementById("new-prov-url").focus(); }
 function hideAddProvider() { document.getElementById("add-provider-modal").classList.add("hidden"); }
+function clearDetect() {
+  var el = document.getElementById("detect-result");
+  if (el) { el.className = "detect-result hidden"; el.textContent = ""; }
+  var ml = document.getElementById("detect-models-list");
+  if (ml) ml.classList.add("hidden");
+}
+
+async function detectProvider() {
+  var url = val("new-prov-url");
+  if (!url) return toast("Enter a Base URL first", "error");
+  var key = val("new-prov-key-detect");
+  var btn = document.getElementById("btn-detect");
+  var el = document.getElementById("detect-result");
+  el.className = "detect-result loading";
+  el.innerHTML = '<span class="spinner"></span> Detecting protocol…';
+  btn.disabled = true;
+  try {
+    var r = await api("POST", "/api/providers/detect", { baseURL: url, apiKey: key });
+    if (r.protocol) {
+      el.className = "detect-result ok";
+      el.textContent = "✓ Protocol: " + r.protocol + (r.hint ? "\n" + r.hint : "");
+      // Pre-fill form fields
+      var protoEl = document.getElementById("new-prov-proto");
+      if (protoEl) protoEl.value = r.protocol;
+      // Auto-suggest ID from URL
+      var idEl = document.getElementById("new-prov-id");
+      if (idEl && !idEl.value) {
+        try {
+          var hostname = new URL(url).hostname.replace(/^api\./, "").replace(/\.com$|\.ai$|\.xyz$/, "").split(".")[0];
+          idEl.value = hostname;
+          document.getElementById("new-prov-name").value = hostname.charAt(0).toUpperCase() + hostname.slice(1);
+          document.getElementById("new-prov-env").value = hostname.toUpperCase().replace(/[^A-Z0-9]/g, "_") + "_API_KEY";
+        } catch(e2) {}
+      }
+      // Show models
+      if (r.models && r.models.length) {
+        var ml = document.getElementById("detect-models-list");
+        document.getElementById("detect-models-inner").textContent = r.models.join("\n");
+        ml.classList.remove("hidden");
+      }
+    } else {
+      el.className = "detect-result err";
+      el.textContent = "✗ " + (r.error || "Detection failed") + (r.hint ? "\n" + r.hint : "");
+    }
+  } catch(e) {
+    el.className = "detect-result err";
+    el.textContent = "✗ Error: " + e.message;
+  }
+  btn.disabled = false;
+}
 
 async function saveKey(pid) {
   var k = document.getElementById("key-" + pid);
@@ -282,12 +385,10 @@ async function testKey(pid) {
 }
 
 async function addCustomProvider() {
-  var id = document.getElementById("new-prov-id").value.trim();
-  var name = document.getElementById("new-prov-name").value.trim();
-  var url = document.getElementById("new-prov-url").value.trim();
-  var auth = document.getElementById("new-prov-auth").value.trim() || "Bearer";
-  if (!id || !name || !url) return toast("Fill all fields", "error");
-  await api("POST", "/api/providers/custom", { id: id, name: name, baseURL: url, authHeader: auth, website: url });
+  var id = val("new-prov-id"), name = val("new-prov-name"), url = val("new-prov-url");
+  var proto = val("new-prov-proto") || "openai-compatible", env = val("new-prov-env");
+  if (!id || !url) return toast("ID and Base URL required", "error");
+  await api("POST", "/api/providers", { id: id, name: name, baseURL: url, protocol: proto, keyEnv: env });
   toast("Provider added"); renderPage();
 }
 
@@ -353,6 +454,7 @@ async function renderModels() {
     '<div class="toolbar">' +
     '<button class="btn btn-primary" onclick="refreshModels()">' + I.refresh + ' Refresh</button>' +
     '<button class="btn btn-green" onclick="saveSelections()">' + I.check + ' Save Selections</button>' +
+    '<button class="btn btn-ghost" onclick="downloadFile(\'/api/catalog/download\',\'codex-models.json\')">' + I.download + ' Download Catalog</button>' +
     '<span id="model-count" class="badge">' + catalog.length + ' models</span>' +
     '</div>' +
     '<div class="search-bar"><input type="search" id="model-search" placeholder="Search models or providers..." oninput="filterModels()"/>' + I.search + '</div>' +
@@ -554,6 +656,39 @@ async function downloadProfile() {
     URL.revokeObjectURL(url);
     if (el) el.innerHTML = '<span style="color:var(--green)">Downloaded</span>';
   } catch (e) { if (el) el.innerHTML = '<span style="color:var(--red)">Error</span>'; }
+}
+
+function val(id){ var e=document.getElementById(id); return e ? e.value.trim() : ""; }
+async function saveProvider(id){ await api("POST","/api/providers",{ id:id, baseURL:val("url-"+id), protocol:val("proto-"+id), keyEnv:val("env-"+id) }); toast(id+" saved"); renderPage(); }
+async function toggleProvider(id,enabled){ await api("POST","/api/providers/"+encodeURIComponent(id)+"/enabled",{ enabled:enabled }); toast(id+(enabled?" enabled":" disabled")); renderPage(); }
+async function deleteProvider(id,builtin){ if(!confirm((builtin?"Disable ":"Delete ")+id+"?")) return; await api("DELETE","/api/providers/"+encodeURIComponent(id)); toast(builtin?id+" disabled":id+" deleted"); renderPage(); }
+async function downloadFile(path,name){ try{ var res=await fetch(API+path); var blob=await res.blob(); var u=URL.createObjectURL(blob); var a=document.createElement("a"); a.href=u; a.download=name; a.click(); URL.revokeObjectURL(u); toast("Downloaded "+name);}catch(e){ toast("Download failed","error"); } }
+
+async function renderConversations(){
+  var data = await api("GET","/api/conversations");
+  var convs = data.conversations || [];
+  var rows = convs.map(function(c){
+    return '<div class="card mt-2" style="cursor:pointer" onclick="viewConversation(\'' + c.id + '\')">' +
+      '<div class="flex-between"><h3 style="margin:0;font-size:.7rem">' + (c.model || 'unknown') + ' <span class="text-muted">· ' + c.turns + ' turns</span></h3>' +
+      '<span class="text-muted mono" style="font-size:.55rem">' + (c.timestamp || '').slice(0,19) + '</span></div>' +
+      '<p class="text-muted mt-2">' + escapeHtml(c.preview || '(no preview)') + '</p></div>';
+  }).join("");
+  return '<h2>' + I.logs + ' Conversations</h2>' +
+    '<p class="text-muted mb-3">' + convs.length + ' conversations across all profiles · <span class="mono">' + escapeHtml(data.dir || '') + '</span></p>' +
+    '<div id="conv-detail"></div>' +
+    (rows || '<div class="card"><p class="text-muted">No conversations found yet. They appear here after you run Codex.</p></div>');
+}
+async function viewConversation(id){
+  var c = await api("GET","/api/conversations/"+encodeURIComponent(id));
+  var turns = (c.turns || []).map(function(t){
+    var cls = t.role==='user'?'user':(t.role==='assistant'?'assistant':'system');
+    return '<div class="chat-msg ' + cls + '"><strong>' + t.role + ':</strong> ' + escapeHtml(t.text) + '</div>';
+  }).join("");
+  var el = document.getElementById("conv-detail");
+  el.innerHTML = '<div class="card mb-3"><div class="flex-between mb-3"><h3 style="margin:0;font-size:.68rem" class="mono">' + id + '</h3>' +
+    '<button class="btn btn-ghost btn-sm" onclick="downloadFile(\'/api/conversations/' + encodeURIComponent(id) + '/download\',\'' + id + '.jsonl\')">' + I.download + ' Download</button></div>' +
+    '<div class="chat-log" style="max-height:440px">' + (turns || '(empty)') + '</div></div>';
+  el.scrollIntoView({ behavior:'smooth' });
 }
 
 function formatUptime(s) {

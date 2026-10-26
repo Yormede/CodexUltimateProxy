@@ -3,3 +3,4 @@ omnicodex.config.json
 *.log
 *.bak
 .env
+omnicodex.keys.json
